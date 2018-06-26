@@ -433,81 +433,7 @@ export default class AnimationScreen extends Component {
             <Animated.View style={[styles.viewBox, {opacity: this.fadeBoxAnim}]}/>
 
             {/* Group icon */}
-            <Animated.View style={[styles.viewWrapGroupIcon, {marginLeft: this.moveRightGroupIcon}]}>
-
-              {/* Icon like */}
-              <View style={styles.viewWrapIcon}>
-                <Animated.View style={{marginBottom: this.pushIconLikeUp, transform: [{scale: this.zoomIconLike}]}}>
-                  <FastImage
-                    style={{
-                      width: 40,
-                      height: 40
-                    }}
-                    source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/like.gif'}}/>
-                </Animated.View>
-              </View>
-
-              {/* Icon love */}
-              <View style={styles.viewWrapIcon}>
-                <Animated.View style={{marginBottom: this.pushIconLoveUp, transform: [{scale: this.zoomIconLove}]}}>
-                  <FastImage
-                    style={{
-                      width: 40,
-                      height: 40
-                    }}
-                    source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/love.gif'}}/>
-                </Animated.View>
-              </View>
-
-              {/* Icon haha */}
-              <View style={styles.viewWrapIcon}>
-                <Animated.View style={{marginBottom: this.pushIconHahaUp, transform: [{scale: this.zoomIconHaha}]}}>
-                  <FastImage
-                    style={{
-                      width: 40,
-                      height: 40
-                    }}
-                    source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/haha.gif'}}/>
-                </Animated.View>
-              </View>
-
-              {/* Icon wow */}
-              <View style={styles.viewWrapIcon}>
-                <Animated.View style={{marginBottom: this.pushIconWowUp, transform: [{scale: this.zoomIconWow}]}}>
-                  <FastImage
-                    style={{
-                      width: 40,
-                      height: 40
-                    }}
-                    source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/wow.gif'}}/>
-                </Animated.View>
-              </View>
-
-              {/* Icon sad */}
-              <View style={styles.viewWrapIcon}>
-                <Animated.View style={{marginBottom: this.pushIconSadUp, transform: [{scale: this.zoomIconSad}]}}>
-                  <FastImage
-                    style={{
-                      width: 40,
-                      height: 40
-                    }}
-                    source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/sad.gif'}}/>
-                </Animated.View>
-              </View>
-
-              {/* Icon angry */}
-              <View style={styles.viewWrapIcon}>
-                <Animated.View style={{marginBottom: this.pushIconAngryUp, transform: [{scale: this.zoomIconAngry}]}}>
-                  <FastImage
-                    style={{
-                      width: 40,
-                      height: 40
-                    }}
-                    source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/angry.gif'}}/>
-                </Animated.View>
-              </View>
-
-            </Animated.View>
+            this.renderGroupIcon()
 
             {/* Button */}
             <View style={styles.viewBtn} onTouchStart={this.onTouchStart} onTouchEnd={this.onTouchEnd}>
@@ -529,6 +455,86 @@ export default class AnimationScreen extends Component {
         </View>
       </View>
 
+    )
+  }
+
+  renderGroupIcon () {
+    return (
+      <Animated.View style={[styles.viewWrapGroupIcon, {marginLeft: this.moveRightGroupIcon}]}>
+
+        {/* Icon like */}
+        <View style={styles.viewWrapIcon}>
+          <Animated.View style={{marginBottom: this.pushIconLikeUp, transform: [{scale: this.zoomIconLike}]}}>
+            <FastImage
+              style={{
+                width: 40,
+                height: 40
+              }}
+              source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/like.gif'}}/>
+          </Animated.View>
+        </View>
+
+        {/* Icon love */}
+        <View style={styles.viewWrapIcon}>
+          <Animated.View style={{marginBottom: this.pushIconLoveUp, transform: [{scale: this.zoomIconLove}]}}>
+            <FastImage
+              style={{
+                width: 40,
+                height: 40
+              }}
+              source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/love.gif'}}/>
+          </Animated.View>
+        </View>
+
+        {/* Icon haha */}
+        <View style={styles.viewWrapIcon}>
+          <Animated.View style={{marginBottom: this.pushIconHahaUp, transform: [{scale: this.zoomIconHaha}]}}>
+            <FastImage
+              style={{
+                width: 40,
+                height: 40
+              }}
+              source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/haha.gif'}}/>
+          </Animated.View>
+        </View>
+
+        {/* Icon wow */}
+        <View style={styles.viewWrapIcon}>
+          <Animated.View style={{marginBottom: this.pushIconWowUp, transform: [{scale: this.zoomIconWow}]}}>
+            <FastImage
+              style={{
+                width: 40,
+                height: 40
+              }}
+              source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/wow.gif'}}/>
+          </Animated.View>
+        </View>
+
+        {/* Icon sad */}
+        <View style={styles.viewWrapIcon}>
+          <Animated.View style={{marginBottom: this.pushIconSadUp, transform: [{scale: this.zoomIconSad}]}}>
+            <FastImage
+              style={{
+                width: 40,
+                height: 40
+              }}
+              source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/sad.gif'}}/>
+          </Animated.View>
+        </View>
+
+        {/* Icon angry */}
+        <View style={styles.viewWrapIcon}>
+          <Animated.View style={{marginBottom: this.pushIconAngryUp, transform: [{scale: this.zoomIconAngry}]}}>
+            <FastImage
+              style={{
+                width: 40,
+                height: 40
+              }}
+              source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/angry.gif'}}/>
+          </Animated.View>
+        </View>
+
+      </Animated.View>
     )
   }
 }
