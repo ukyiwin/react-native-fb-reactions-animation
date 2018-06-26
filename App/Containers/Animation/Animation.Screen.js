@@ -45,22 +45,22 @@ export default class AnimationScreen extends Component {
     this.moveRightGroupIcon = new Animated.Value(10)
     // Like
     this.pushIconLikeUp = new Animated.Value(0)
-    this.zoomIconLike = new Animated.Value(0)
+    this.zoomIconLike = new Animated.Value(0.01)
     // Love
     this.pushIconLoveUp = new Animated.Value(0)
-    this.zoomIconLove = new Animated.Value(0)
+    this.zoomIconLove = new Animated.Value(0.01)
     // Haha
     this.pushIconHahaUp = new Animated.Value(0)
-    this.zoomIconHaha = new Animated.Value(0)
+    this.zoomIconHaha = new Animated.Value(0.01)
     // Wow
     this.pushIconWowUp = new Animated.Value(0)
-    this.zoomIconWow = new Animated.Value(0)
+    this.zoomIconWow = new Animated.Value(0.01)
     // Sad
     this.pushIconSadUp = new Animated.Value(0)
-    this.zoomIconSad = new Animated.Value(0)
+    this.zoomIconSad = new Animated.Value(0.01)
     // Angry
     this.pushIconAngryUp = new Animated.Value(0)
-    this.zoomIconAngry = new Animated.Value(0)
+    this.zoomIconAngry = new Animated.Value(0.01)
   }
 
   componentWillMount () {
@@ -154,22 +154,22 @@ export default class AnimationScreen extends Component {
     this.moveRightGroupIcon.setValue(10)
 
     this.pushIconLikeUp.setValue(0)
-    this.zoomIconLike.setValue(0)
+    this.zoomIconLike.setValue(0.01)
 
     this.pushIconLoveUp.setValue(0)
-    this.zoomIconLove.setValue(0)
+    this.zoomIconLove.setValue(0.01)
 
     this.pushIconHahaUp.setValue(0)
-    this.zoomIconHaha.setValue(0)
+    this.zoomIconHaha.setValue(0.01)
 
     this.pushIconWowUp.setValue(0)
-    this.zoomIconWow.setValue(0)
+    this.zoomIconWow.setValue(0.01)
 
     this.pushIconSadUp.setValue(0)
-    this.zoomIconSad.setValue(0)
+    this.zoomIconSad.setValue(0.01)
 
     this.pushIconAngryUp.setValue(0)
-    this.zoomIconAngry.setValue(0)
+    this.zoomIconAngry.setValue(0.01)
 
     Animated.parallel([
       // Button
@@ -204,7 +204,7 @@ export default class AnimationScreen extends Component {
         duration: 250 * this.timeDilation
       }),
       Animated.timing(this.zoomIconLike, {
-        toValue: 40,
+        toValue: 1,
         duration: 250 * this.timeDilation
       }),
 
@@ -214,7 +214,7 @@ export default class AnimationScreen extends Component {
         delay: 50
       }),
       Animated.timing(this.zoomIconLove, {
-        toValue: 40,
+        toValue: 1,
         duration: 250 * this.timeDilation,
         delay: 50
       }),
@@ -225,7 +225,7 @@ export default class AnimationScreen extends Component {
         delay: 100
       }),
       Animated.timing(this.zoomIconHaha, {
-        toValue: 40,
+        toValue: 1,
         duration: 250 * this.timeDilation,
         delay: 100
       }),
@@ -236,7 +236,7 @@ export default class AnimationScreen extends Component {
         delay: 150
       }),
       Animated.timing(this.zoomIconWow, {
-        toValue: 40,
+        toValue: 1,
         duration: 250 * this.timeDilation,
         delay: 150
       }),
@@ -247,7 +247,7 @@ export default class AnimationScreen extends Component {
         delay: 200
       }),
       Animated.timing(this.zoomIconSad, {
-        toValue: 40,
+        toValue: 1,
         duration: 250 * this.timeDilation,
         delay: 200
       }),
@@ -258,7 +258,7 @@ export default class AnimationScreen extends Component {
         delay: 250
       }),
       Animated.timing(this.zoomIconAngry, {
-        toValue: 40,
+        toValue: 1,
         duration: 250 * this.timeDilation,
         delay: 250
       })
@@ -275,22 +275,22 @@ export default class AnimationScreen extends Component {
     this.moveRightGroupIcon.setValue(20)
 
     this.pushIconLikeUp.setValue(25)
-    this.zoomIconLike.setValue(40)
+    this.zoomIconLike.setValue(1)
 
     this.pushIconLoveUp.setValue(25)
-    this.zoomIconLove.setValue(40)
+    this.zoomIconLove.setValue(1)
 
     this.pushIconHahaUp.setValue(25)
-    this.zoomIconHaha.setValue(40)
+    this.zoomIconHaha.setValue(1)
 
     this.pushIconWowUp.setValue(25)
-    this.zoomIconWow.setValue(40)
+    this.zoomIconWow.setValue(1)
 
     this.pushIconSadUp.setValue(25)
-    this.zoomIconSad.setValue(40)
+    this.zoomIconSad.setValue(1)
 
     this.pushIconAngryUp.setValue(25)
-    this.zoomIconAngry.setValue(40)
+    this.zoomIconAngry.setValue(1)
 
     Animated.parallel([
       // Button
@@ -324,7 +324,7 @@ export default class AnimationScreen extends Component {
         duration: 250 * this.timeDilation
       }),
       Animated.timing(this.zoomIconLike, {
-        toValue: 0,
+        toValue: 0.01,
         duration: 250 * this.timeDilation
       }),
 
@@ -334,7 +334,7 @@ export default class AnimationScreen extends Component {
         delay: 50
       }),
       Animated.timing(this.zoomIconLove, {
-        toValue: 0,
+        toValue: 0.01,
         duration: 250 * this.timeDilation,
         delay: 50
       }),
@@ -345,7 +345,7 @@ export default class AnimationScreen extends Component {
         delay: 100
       }),
       Animated.timing(this.zoomIconHaha, {
-        toValue: 0,
+        toValue: 0.01,
         duration: 250 * this.timeDilation,
         delay: 100
       }),
@@ -356,7 +356,7 @@ export default class AnimationScreen extends Component {
         delay: 150
       }),
       Animated.timing(this.zoomIconWow, {
-        toValue: 0,
+        toValue: 0.01,
         duration: 250 * this.timeDilation,
         delay: 150
       }),
@@ -367,7 +367,7 @@ export default class AnimationScreen extends Component {
         delay: 200
       }),
       Animated.timing(this.zoomIconSad, {
-        toValue: 0,
+        toValue: 0.01,
         duration: 250 * this.timeDilation,
         delay: 200
       }),
@@ -378,7 +378,7 @@ export default class AnimationScreen extends Component {
         delay: 250
       }),
       Animated.timing(this.zoomIconAngry, {
-        toValue: 0,
+        toValue: 0.01,
         duration: 250 * this.timeDilation,
         delay: 250
       })
@@ -437,68 +437,74 @@ export default class AnimationScreen extends Component {
 
               {/* Icon like */}
               <View style={styles.viewWrapIcon}>
-                <FastImage
-                  style={{
-                    marginBottom: 25,
-                    width: 40,
-                    height: 40
-                  }}
-                  source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/like.gif'}}/>
+                <Animated.View style={{marginBottom: this.pushIconLikeUp, transform: [{scale: this.zoomIconLike}]}}>
+                  <FastImage
+                    style={{
+                      width: 40,
+                      height: 40
+                    }}
+                    source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/like.gif'}}/>
+                </Animated.View>
               </View>
 
               {/* Icon love */}
               <View style={styles.viewWrapIcon}>
-                <FastImage
-                  style={{
-                    marginBottom: 25,
-                    width: 40,
-                    height: 40
-                  }}
-                  source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/love.gif'}}/>
+                <Animated.View style={{marginBottom: this.pushIconLoveUp, transform: [{scale: this.zoomIconLove}]}}>
+                  <FastImage
+                    style={{
+                      width: 40,
+                      height: 40
+                    }}
+                    source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/love.gif'}}/>
+                </Animated.View>
               </View>
 
               {/* Icon haha */}
               <View style={styles.viewWrapIcon}>
-                <FastImage
-                  style={{
-                    marginBottom: 25,
-                    width: 40,
-                    height: 40
-                  }}
-                  source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/haha.gif'}}/>
+                <Animated.View style={{marginBottom: this.pushIconHahaUp, transform: [{scale: this.zoomIconHaha}]}}>
+                  <FastImage
+                    style={{
+                      width: 40,
+                      height: 40
+                    }}
+                    source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/haha.gif'}}/>
+                </Animated.View>
               </View>
 
               {/* Icon wow */}
               <View style={styles.viewWrapIcon}>
-                <FastImage
-                  style={{
-                    marginBottom: 25,
-                    width: 40,
-                    height: 40
-                  }}
-                  source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/wow.gif'}}/>
+                <Animated.View style={{marginBottom: this.pushIconWowUp, transform: [{scale: this.zoomIconWow}]}}>
+                  <FastImage
+                    style={{
+                      width: 40,
+                      height: 40
+                    }}
+                    source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/wow.gif'}}/>
+                </Animated.View>
               </View>
 
               {/* Icon sad */}
               <View style={styles.viewWrapIcon}>
-                <FastImage
-                  style={{
-                    marginBottom: 25,
-                    width: 40,
-                    height: 40
-                  }}
-                  source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/sad.gif'}}/>
+                <Animated.View style={{marginBottom: this.pushIconSadUp, transform: [{scale: this.zoomIconSad}]}}>
+                  <FastImage
+                    style={{
+                      width: 40,
+                      height: 40
+                    }}
+                    source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/sad.gif'}}/>
+                </Animated.View>
               </View>
 
               {/* Icon angry */}
               <View style={styles.viewWrapIcon}>
-                <FastImage
-                  style={{
-                    marginBottom: 25,
-                    width: 40,
-                    height: 40
-                  }}
-                  source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/angry.gif'}}/>
+                <Animated.View style={{marginBottom: this.pushIconAngryUp, transform: [{scale: this.zoomIconAngry}]}}>
+                  <FastImage
+                    style={{
+                      width: 40,
+                      height: 40
+                    }}
+                    source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/angry.gif'}}/>
+                </Animated.View>
               </View>
 
             </Animated.View>
