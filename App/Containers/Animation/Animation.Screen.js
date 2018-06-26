@@ -414,22 +414,22 @@ export default class AnimationScreen extends Component {
         {/* Toolbar */}
         <View style={styles.toolbar}>
           <TouchableOpacity onPress={() => this.handleBackPress()}>
-            <Image style={styles.icBack} source={images.ic_back}/>
+            <Image style={styles.icBack} source={images.ic_back} />
           </TouchableOpacity>
           <Text style={styles.titleToolbar}>ANIMATION</Text>
-          <View style={styles.icTrail}/>
+          <View style={styles.icTrail} />
         </View>
 
         {/* Body */}
         <View style={styles.viewBody} {...this.rootPanResponder.panHandlers} >
           {/* Top space */}
-          <View style={styles.viewTopSpace}/>
+          <View style={styles.viewTopSpace} />
 
           {/* Content */}
           <View style={styles.viewContent}>
 
             {/* Box */}
-            <Animated.View style={[styles.viewBox, {opacity: this.fadeBoxAnim}]}/>
+            <Animated.View style={[styles.viewBox, {opacity: this.fadeBoxAnim}]} />
 
             {/* Group icon */}
             <Animated.View style={[styles.viewWrapGroupIcon, {marginLeft: this.moveRightGroupIcon}]}>
@@ -442,7 +442,7 @@ export default class AnimationScreen extends Component {
                     width: 40,
                     height: 40
                   }}
-                  source={images.like_gif}/>
+                  source={images.like_gif} />
               </View>
 
               {/* Icon love */}
@@ -453,7 +453,7 @@ export default class AnimationScreen extends Component {
                     width: 40,
                     height: 40
                   }}
-                  source={images.love_gif}/>
+                  source={images.love_gif} />
               </View>
 
               {/* Icon haha */}
@@ -464,7 +464,7 @@ export default class AnimationScreen extends Component {
                     width: 40,
                     height: 40
                   }}
-                  source={images.haha_gif}/>
+                  source={images.haha_gif} />
               </View>
 
               {/* Icon wow */}
@@ -475,7 +475,7 @@ export default class AnimationScreen extends Component {
                     width: 40,
                     height: 40
                   }}
-                  source={images.wow_gif}/>
+                  source={images.wow_gif} />
               </View>
 
               {/* Icon sad */}
@@ -486,7 +486,7 @@ export default class AnimationScreen extends Component {
                     width: 40,
                     height: 40
                   }}
-                  source={images.sad_gif}/>
+                  source={images.sad_gif} />
               </View>
 
               {/* Icon angry */}
@@ -497,7 +497,7 @@ export default class AnimationScreen extends Component {
                     width: 40,
                     height: 40
                   }}
-                  source={images.angry_gif}/>
+                  source={images.angry_gif} />
               </View>
 
             </Animated.View>
@@ -505,12 +505,12 @@ export default class AnimationScreen extends Component {
             {/* Button */}
             <View style={styles.viewBtn} onTouchStart={this.onTouchStart} onTouchEnd={this.onTouchEnd}>
               <Animated.Image source={this.state.isLiked ? images.like_static_fill : images.like_static}
-                              style={[styles.imgLikeInBtn,
-                                {
-                                  transform: [
+                style={[styles.imgLikeInBtn,
+                  {
+                    transform: [
                                     {rotate: this.state.isLongTouch ? tiltBounceIconAnim2 : tiltBounceIconAnim},
                                     {scale: this.state.isLongTouch ? this.zoomIconAnim2 : zoomBounceIconAnim}]
-                                }]}/>
+                  }]} />
               <Animated.Text
                 style={[styles.textBtn, {color: this.state.isLiked ? '#3b5998' : 'grey'},
                   {transform: [{scale: this.state.isLongTouch ? this.zoomTextAnim2 : zoomBounceTextAnim}]}]}>
