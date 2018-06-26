@@ -5,7 +5,6 @@ import styles from './Animation.Style'
 import images from '../../Themes/Images'
 
 export default class AnimationScreen extends Component {
-
   constructor (props) {
     super(props)
     this.backPress = this.handleBackPress.bind(this)
@@ -20,7 +19,7 @@ export default class AnimationScreen extends Component {
     this.isTouchBtn = false
     this.state = {
       isLongTouch: false,
-      isLiked: false,
+      isLiked: false
     }
 
     // Duration animation
@@ -79,14 +78,13 @@ export default class AnimationScreen extends Component {
 
       onPanResponderGrant: (evt, gestureState) => {
         console.log('on grant')
-
       },
       onPanResponderMove: (evt, gestureState) => {
         console.log('on move', gestureState)
       },
       onPanResponderRelease: (evt, gestureState) => {
         console.log('on release')
-      },
+      }
     })
   }
 
@@ -115,7 +113,7 @@ export default class AnimationScreen extends Component {
   doAnimationQuickTouch = () => {
     if (!this.state.isLiked) {
       this.setState({
-        isLiked: true,
+        isLiked: true
       })
       this.tiltIconAnim.setValue(0)
       this.zoomIconAnim.setValue(0)
@@ -123,27 +121,27 @@ export default class AnimationScreen extends Component {
       Animated.parallel([
         Animated.timing(this.tiltIconAnim, {
           toValue: 1,
-          duration: this.durationAnimationQuickTouch * this.timeDilation,
+          duration: this.durationAnimationQuickTouch * this.timeDilation
         }),
         Animated.timing(this.zoomIconAnim, {
           toValue: 1,
-          duration: this.durationAnimationQuickTouch * this.timeDilation,
+          duration: this.durationAnimationQuickTouch * this.timeDilation
         }),
         Animated.timing(this.zoomTextAnim, {
           toValue: 1,
-          duration: this.durationAnimationQuickTouch * this.timeDilation,
+          duration: this.durationAnimationQuickTouch * this.timeDilation
         })
       ]).start()
     } else {
       this.setState({
-        isLiked: false,
+        isLiked: false
       })
     }
   }
 
   doAnimationLongTouch = () => {
     this.setState({
-      isLongTouch: true,
+      isLongTouch: true
     })
 
     this.tiltIconAnim2.setValue(0)
@@ -176,93 +174,93 @@ export default class AnimationScreen extends Component {
       // Button
       Animated.timing(this.tiltIconAnim2, {
         toValue: 1,
-        duration: this.durationAnimationLongTouch * this.timeDilation,
+        duration: this.durationAnimationLongTouch * this.timeDilation
       }),
       Animated.timing(this.zoomIconAnim2, {
         toValue: 0.8,
-        duration: this.durationAnimationLongTouch * this.timeDilation,
+        duration: this.durationAnimationLongTouch * this.timeDilation
       }),
       Animated.timing(this.zoomTextAnim2, {
         toValue: 0.8,
-        duration: this.durationAnimationLongTouch * this.timeDilation,
+        duration: this.durationAnimationLongTouch * this.timeDilation
       }),
 
       // Box
       Animated.timing(this.fadeBoxAnim, {
         toValue: 1,
         duration: this.durationAnimationBox * this.timeDilation,
-        delay: 350,
+        delay: 350
       }),
 
       // Group icon
       Animated.timing(this.moveRightGroupIcon, {
         toValue: 20,
-        duration: this.durationAnimationBox * this.timeDilation,
+        duration: this.durationAnimationBox * this.timeDilation
       }),
 
       Animated.timing(this.pushIconLikeUp, {
         toValue: 25,
-        duration: 250 * this.timeDilation,
+        duration: 250 * this.timeDilation
       }),
       Animated.timing(this.zoomIconLike, {
         toValue: 40,
-        duration: 250 * this.timeDilation,
+        duration: 250 * this.timeDilation
       }),
 
       Animated.timing(this.pushIconLoveUp, {
         toValue: 25,
         duration: 250 * this.timeDilation,
-        delay: 50,
+        delay: 50
       }),
       Animated.timing(this.zoomIconLove, {
         toValue: 40,
         duration: 250 * this.timeDilation,
-        delay: 50,
+        delay: 50
       }),
 
       Animated.timing(this.pushIconHahaUp, {
         toValue: 25,
         duration: 250 * this.timeDilation,
-        delay: 100,
+        delay: 100
       }),
       Animated.timing(this.zoomIconHaha, {
         toValue: 40,
         duration: 250 * this.timeDilation,
-        delay: 100,
+        delay: 100
       }),
 
       Animated.timing(this.pushIconWowUp, {
         toValue: 25,
         duration: 250 * this.timeDilation,
-        delay: 150,
+        delay: 150
       }),
       Animated.timing(this.zoomIconWow, {
         toValue: 40,
         duration: 250 * this.timeDilation,
-        delay: 150,
+        delay: 150
       }),
 
       Animated.timing(this.pushIconSadUp, {
         toValue: 25,
         duration: 250 * this.timeDilation,
-        delay: 200,
+        delay: 200
       }),
       Animated.timing(this.zoomIconSad, {
         toValue: 40,
         duration: 250 * this.timeDilation,
-        delay: 200,
+        delay: 200
       }),
 
       Animated.timing(this.pushIconAngryUp, {
         toValue: 25,
         duration: 250 * this.timeDilation,
-        delay: 250,
+        delay: 250
       }),
       Animated.timing(this.zoomIconAngry, {
         toValue: 40,
         duration: 250 * this.timeDilation,
-        delay: 250,
-      }),
+        delay: 250
+      })
     ]).start()
   }
 
@@ -297,98 +295,98 @@ export default class AnimationScreen extends Component {
       // Button
       Animated.timing(this.tiltIconAnim2, {
         toValue: 0,
-        duration: this.durationAnimationLongTouch * this.timeDilation,
+        duration: this.durationAnimationLongTouch * this.timeDilation
       }),
       Animated.timing(this.zoomIconAnim2, {
         toValue: 1,
-        duration: this.durationAnimationLongTouch * this.timeDilation,
+        duration: this.durationAnimationLongTouch * this.timeDilation
       }),
       Animated.timing(this.zoomTextAnim2, {
         toValue: 1,
-        duration: this.durationAnimationLongTouch * this.timeDilation,
+        duration: this.durationAnimationLongTouch * this.timeDilation
       }),
 
       // Box
       Animated.timing(this.fadeBoxAnim, {
         toValue: 0,
-        duration: this.durationAnimationLongTouch * this.timeDilation,
+        duration: this.durationAnimationLongTouch * this.timeDilation
       }),
 
       // Group icon
       Animated.timing(this.moveRightGroupIcon, {
         toValue: 10,
-        duration: this.durationAnimationBox * this.timeDilation,
+        duration: this.durationAnimationBox * this.timeDilation
       }),
 
       Animated.timing(this.pushIconLikeUp, {
         toValue: 0,
-        duration: 250 * this.timeDilation,
+        duration: 250 * this.timeDilation
       }),
       Animated.timing(this.zoomIconLike, {
         toValue: 0,
-        duration: 250 * this.timeDilation,
+        duration: 250 * this.timeDilation
       }),
 
       Animated.timing(this.pushIconLoveUp, {
         toValue: 0,
         duration: 250 * this.timeDilation,
-        delay: 50,
+        delay: 50
       }),
       Animated.timing(this.zoomIconLove, {
         toValue: 0,
         duration: 250 * this.timeDilation,
-        delay: 50,
+        delay: 50
       }),
 
       Animated.timing(this.pushIconHahaUp, {
         toValue: 0,
         duration: 250 * this.timeDilation,
-        delay: 100,
+        delay: 100
       }),
       Animated.timing(this.zoomIconHaha, {
         toValue: 0,
         duration: 250 * this.timeDilation,
-        delay: 100,
+        delay: 100
       }),
 
       Animated.timing(this.pushIconWowUp, {
         toValue: 0,
         duration: 250 * this.timeDilation,
-        delay: 150,
+        delay: 150
       }),
       Animated.timing(this.zoomIconWow, {
         toValue: 0,
         duration: 250 * this.timeDilation,
-        delay: 150,
+        delay: 150
       }),
 
       Animated.timing(this.pushIconSadUp, {
         toValue: 0,
         duration: 250 * this.timeDilation,
-        delay: 200,
+        delay: 200
       }),
       Animated.timing(this.zoomIconSad, {
         toValue: 0,
         duration: 250 * this.timeDilation,
-        delay: 200,
+        delay: 200
       }),
 
       Animated.timing(this.pushIconAngryUp, {
         toValue: 0,
         duration: 250 * this.timeDilation,
-        delay: 250,
+        delay: 250
       }),
       Animated.timing(this.zoomIconAngry, {
         toValue: 0,
         duration: 250 * this.timeDilation,
-        delay: 250,
-      }),
+        delay: 250
+      })
     ]).start(this.onAnimationLongTouchComplete)
   }
 
   onAnimationLongTouchComplete = () => {
     this.setState({
-      isLongTouch: false,
+      isLongTouch: false
     })
   }
 
@@ -413,7 +411,7 @@ export default class AnimationScreen extends Component {
 
     return (
       <View style={styles.viewContainer}>
-        {/*Toolbar*/}
+        {/* Toolbar */}
         <View style={styles.toolbar}>
           <TouchableOpacity onPress={() => this.handleBackPress()}>
             <Image style={styles.icBack} source={images.ic_back}/>
@@ -422,21 +420,21 @@ export default class AnimationScreen extends Component {
           <View style={styles.icTrail}/>
         </View>
 
-        {/*Body*/}
+        {/* Body */}
         <View style={styles.viewBody} {...this.rootPanResponder.panHandlers} >
-          {/*Top space*/}
+          {/* Top space */}
           <View style={styles.viewTopSpace}/>
 
-          {/*Content*/}
+          {/* Content */}
           <View style={styles.viewContent}>
 
-            {/*Box*/}
+            {/* Box */}
             <Animated.View style={[styles.viewBox, {opacity: this.fadeBoxAnim}]}/>
 
-            {/*Group icon*/}
+            {/* Group icon */}
             <Animated.View style={[styles.viewWrapGroupIcon, {marginLeft: this.moveRightGroupIcon}]}>
 
-              {/*Icon like*/}
+              {/* Icon like */}
               <View style={styles.viewWrapIcon}>
                 <Image
                   style={{
@@ -447,7 +445,7 @@ export default class AnimationScreen extends Component {
                   source={images.like_gif}/>
               </View>
 
-              {/*Icon love*/}
+              {/* Icon love */}
               <View style={styles.viewWrapIcon}>
                 <Image
                   style={{
@@ -458,7 +456,7 @@ export default class AnimationScreen extends Component {
                   source={images.love_gif}/>
               </View>
 
-              {/*Icon haha*/}
+              {/* Icon haha */}
               <View style={styles.viewWrapIcon}>
                 <Image
                   style={{
@@ -469,7 +467,7 @@ export default class AnimationScreen extends Component {
                   source={images.haha_gif}/>
               </View>
 
-              {/*Icon wow*/}
+              {/* Icon wow */}
               <View style={styles.viewWrapIcon}>
                 <Image
                   style={{
@@ -480,7 +478,7 @@ export default class AnimationScreen extends Component {
                   source={images.wow_gif}/>
               </View>
 
-              {/*Icon sad*/}
+              {/* Icon sad */}
               <View style={styles.viewWrapIcon}>
                 <Image
                   style={{
@@ -491,7 +489,7 @@ export default class AnimationScreen extends Component {
                   source={images.sad_gif}/>
               </View>
 
-              {/*Icon angry*/}
+              {/* Icon angry */}
               <View style={styles.viewWrapIcon}>
                 <Image
                   style={{
@@ -504,7 +502,7 @@ export default class AnimationScreen extends Component {
 
             </Animated.View>
 
-            {/*Button*/}
+            {/* Button */}
             <View style={styles.viewBtn} onTouchStart={this.onTouchStart} onTouchEnd={this.onTouchEnd}>
               <Animated.Image source={this.state.isLiked ? images.like_static_fill : images.like_static}
                               style={[styles.imgLikeInBtn,
