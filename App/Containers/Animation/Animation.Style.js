@@ -103,8 +103,8 @@ export default StyleSheet.create({
     borderColor: 'blue',
     alignItems: 'flex-end',
     justifyContent: 'space-around',
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 0,
+    paddingRight: 0,
   },
   viewWrapIcon:{
     width: 40,

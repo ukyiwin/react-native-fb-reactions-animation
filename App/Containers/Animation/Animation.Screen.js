@@ -78,13 +78,35 @@ export default class AnimationScreen extends Component {
       onMoveShouldSetPanResponder: (evt, gestureState) => !this.isTouchBtn,
 
       onPanResponderGrant: (evt, gestureState) => {
-        console.log('on grant')
+        // console.log('on grant')
       },
       onPanResponderMove: (evt, gestureState) => {
-        console.log('on move', gestureState)
+        // console.log('on move', gestureState)
+
+        // the margin top the box is 100
+        // and plus the height of toolbar and the status bar
+        // so the range we check is about 150 -> 450
+        if (gestureState.y0 + gestureState.dy >= 150 && gestureState.y0 + gestureState.dy <= 450) {
+          if (gestureState.x0 + gestureState.dx >= 40 && gestureState.x0 + gestureState.dx < 90) {
+            console.log('like')
+          } else if (gestureState.x0 + gestureState.dx >= 90 && gestureState.x0 + gestureState.dx < 140) {
+            console.log('love')
+          } else if (gestureState.x0 + gestureState.dx >= 140 && gestureState.x0 + gestureState.dx < 190) {
+            console.log('haha')
+          } else if (gestureState.x0 + gestureState.dx >= 190 && gestureState.x0 + gestureState.dx < 240) {
+            console.log('wow')
+          } else if (gestureState.x0 + gestureState.dx >= 240 && gestureState.x0 + gestureState.dx < 290) {
+            console.log('sad')
+          } else if (gestureState.x0 + gestureState.dx >= 290 && gestureState.x0 + gestureState.dx <= 360) {
+            console.log('angry')
+          }
+        } else {
+          console.log('outside')
+        }
       },
       onPanResponderRelease: (evt, gestureState) => {
-        console.log('on release')
+        // console.log('on release')
+        this.doAnimationLongTouchReverse()
       }
     })
   }
@@ -107,7 +129,7 @@ export default class AnimationScreen extends Component {
       clearTimeout(this.timer)
       this.doAnimationQuickTouch()
     } else {
-      this.doAnimationLongTouchReverse()
+      // this.doAnimationLongTouchReverse()
     }
   }
 
