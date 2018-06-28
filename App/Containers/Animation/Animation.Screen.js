@@ -433,7 +433,7 @@ export default class AnimationScreen extends Component {
             <Animated.View style={[styles.viewBox, {opacity: this.fadeBoxAnim}]}/>
 
             {/* Group icon */}
-            this.renderGroupIcon()
+            {this.renderGroupIcon()}
 
             {/* Button */}
             <View style={styles.viewBtn} onTouchStart={this.onTouchStart} onTouchEnd={this.onTouchEnd}>
