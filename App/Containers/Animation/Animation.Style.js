@@ -52,14 +52,14 @@ export default StyleSheet.create({
     borderColor: 'red',
     flexDirection: 'column',
     height: 320,
-    marginLeft: 20,
+    marginLeft: 10,
     marginRight: 10,
   },
 
   // Box
   viewBox: {
     borderRadius: 30,
-    width: 300,
+    width: 320,
     height: 50,
     marginTop: 100,
     marginLeft: 20,
@@ -95,7 +95,7 @@ export default StyleSheet.create({
   // Group icon
   viewWrapGroupIcon: {
     flexDirection: 'row',
-    width: 300,
+    width: 320,
     height: 120,
     marginTop: 50,
     position: 'absolute',
@@ -103,10 +103,10 @@ export default StyleSheet.create({
     borderColor: 'blue',
     alignItems: 'flex-end',
     justifyContent: 'space-around',
-    paddingLeft: 0,
-    paddingRight: 0,
+    paddingLeft: 5,
+    paddingRight: 5,
   },
-  viewWrapIcon:{
+  viewWrapIcon: {
     width: 40,
   },
 })

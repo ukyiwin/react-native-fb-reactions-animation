@@ -17,31 +17,41 @@ export default class AnimationScreen extends Component {
     this.durationLongPress = 250
 
     // Variables to check
+    // 0 = nothing, 1 = like, 2 = love, 3 = haha, 4 = wow, 5 = sad, 6 = angry
     this.isTouchBtn = false
     this.state = {
       isLongTouch: false,
-      isLiked: false
+      isLiked: false,
+      whichIconUserChoose: 0,
+      currentIconFocus: 0,
+      previousIconFocus: 0,
+      isDragging: false,
+      isDraggingOutside: false,
+      isFirstDragging: true,
     }
 
     // Duration animation
+    this.durationAnimationBox = 500
     this.durationAnimationQuickTouch = 500
     this.durationAnimationLongTouch = 150
-    this.durationAnimationBox = 500
+    this.durationAnimationIconWhenDrag = 150
+    this.durationAnimationIconWhenRelease = 1000
 
+    // ------------------------------------------------------------------------------
     // Animation button when quick touch button
     this.tiltIconAnim = new Animated.Value(0)
     this.zoomIconAnim = new Animated.Value(0)
     this.zoomTextAnim = new Animated.Value(0)
 
+    // ------------------------------------------------------------------------------
     // Animation when button long touch button
     this.tiltIconAnim2 = new Animated.Value(0)
     this.zoomIconAnim2 = new Animated.Value(0)
     this.zoomTextAnim2 = new Animated.Value(0)
-
     // Animation of the box
     this.fadeBoxAnim = new Animated.Value(0)
 
-    // Icons
+    // Animation for icons
     this.moveRightGroupIcon = new Animated.Value(10)
     // Like
     this.pushIconLikeUp = new Animated.Value(0)
@@ -61,6 +71,26 @@ export default class AnimationScreen extends Component {
     // Angry
     this.pushIconAngryUp = new Animated.Value(0)
     this.zoomIconAngry = new Animated.Value(0.01)
+
+    // ------------------------------------------------------------------------------
+    // Animation for zoom icons when drag
+    this.zoomIconChosen = new Animated.Value(1)
+    this.zoomIconNotChosen = new Animated.Value(1)
+    this.zoomBoxIcon = new Animated.Value(1)
+    this.zoomIconWhenDragOutside = new Animated.Value(1)
+    this.zoomIconWhenFirstDrag = new Animated.Value(1)
+    this.zoomBoxWhenDragOutside = new Animated.Value(1)
+
+    // ------------------------------------------------------------------------------
+    // For jump icon when release
+    this.zoomIconWhenRelease = new Animated.Value(1)
+    this.moveUpIconWhenRelease = new Animated.Value(1)
+    this.moveLeftIconLikeWhenRelease = new Animated.Value(1)
+    this.moveLeftIconLoveWhenRelease = new Animated.Value(1)
+    this.moveLeftIconHahaWhenRelease = new Animated.Value(1)
+    this.moveLeftIconWowWhenRelease = new Animated.Value(1)
+    this.moveLeftIconSadWhenRelease = new Animated.Value(1)
+    this.moveLeftIconAngryWhenRelease = new Animated.Value(1)
   }
 
   componentWillMount () {
@@ -87,8 +117,18 @@ export default class AnimationScreen extends Component {
         // and plus the height of toolbar and the status bar
         // so the range we check is about 150 -> 450
         if (gestureState.y0 + gestureState.dy >= 150 && gestureState.y0 + gestureState.dy <= 450) {
+          this.setState({
+            isDragging: true,
+            isDraggingOutside: false
+          })
+
+          if (this.state.isFirstDragging) {
+
+          }
+
           if (gestureState.x0 + gestureState.dx >= 40 && gestureState.x0 + gestureState.dx < 90) {
             console.log('like')
+            // this.handleWhenDragBetweenIcon(1)
           } else if (gestureState.x0 + gestureState.dx >= 90 && gestureState.x0 + gestureState.dx < 140) {
             console.log('love')
           } else if (gestureState.x0 + gestureState.dx >= 140 && gestureState.x0 + gestureState.dx < 190) {
@@ -159,6 +199,23 @@ export default class AnimationScreen extends Component {
       this.setState({
         isLiked: false
       })
+      this.tiltIconAnim.setValue(1)
+      this.zoomIconAnim.setValue(1)
+      this.zoomTextAnim.setValue(1)
+      Animated.parallel([
+        Animated.timing(this.tiltIconAnim, {
+          toValue: 0,
+          duration: this.durationAnimationQuickTouch * this.timeDilation
+        }),
+        Animated.timing(this.zoomIconAnim, {
+          toValue: 0,
+          duration: this.durationAnimationQuickTouch * this.timeDilation
+        }),
+        Animated.timing(this.zoomTextAnim, {
+          toValue: 0,
+          duration: this.durationAnimationQuickTouch * this.timeDilation
+        })
+      ]).start()
     }
   }
 
@@ -413,6 +470,33 @@ export default class AnimationScreen extends Component {
     })
   }
 
+  handleWhenDragBetweenIcon = (currentIcon) => {
+    this.setState({
+      whichIconUserChoose: currentIcon,
+      previousIconFocus: this.currentIconFocus,
+      currentIconFocus: currentIcon,
+    })
+
+    this.zoomIconChosen.setValue(1)
+    this.zoomIconChosen.setValue(1)
+    this.zoomBoxIcon.setValue(1)
+
+    Animated.parallel([
+      Animated.timing(this.zoomIconChosen, {
+        toValue: 1.8,
+        duration: this.durationAnimationIconWhenDrag * this.timeDilation
+      }),
+      Animated.timing(this.zoomIconNotChosen, {
+        toValue: 0.8,
+        duration: this.durationAnimationIconWhenDrag * this.timeDilation
+      }),
+      Animated.timing(this.zoomBoxIcon, {
+        toValue: 0.9,
+        duration: this.durationAnimationIconWhenDrag * this.timeDilation
+      })
+    ]).start()
+  }
+
   render () {
     let tiltBounceIconAnim = this.tiltIconAnim.interpolate({
       inputRange: [0, 0.2, 0.8, 1],
@@ -476,7 +560,6 @@ export default class AnimationScreen extends Component {
 
         </View>
       </View>
-
     )
   }
 
@@ -486,7 +569,11 @@ export default class AnimationScreen extends Component {
 
         {/* Icon like */}
         <View style={styles.viewWrapIcon}>
-          <Animated.View style={{marginBottom: this.pushIconLikeUp, transform: [{scale: this.zoomIconLike}]}}>
+          <Animated.View style={{
+            marginBottom: this.pushIconLikeUp, transform: [{
+              scale: 1.8
+            }],
+          }}>
             <FastImage
               style={{
                 width: 40,
