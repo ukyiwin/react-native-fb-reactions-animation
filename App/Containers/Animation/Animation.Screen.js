@@ -123,25 +123,55 @@ export default class AnimationScreen extends Component {
           })
 
           if (this.state.isFirstDragging) {
-
+            this.controlIconWhenFirstDrag()
           }
 
-          if (gestureState.x0 + gestureState.dx >= 40 && gestureState.x0 + gestureState.dx < 90) {
+          if (gestureState.x0 + gestureState.dx >= 35 && gestureState.x0 + gestureState.dx < 88.33) {
             console.log('like')
-            // this.handleWhenDragBetweenIcon(1)
-          } else if (gestureState.x0 + gestureState.dx >= 90 && gestureState.x0 + gestureState.dx < 140) {
+            if (this.state.currentIconFocus !== 1) {
+              this.handleWhenDragBetweenIcon(1)
+            }
+          } else if (gestureState.x0 + gestureState.dx >= 88.33 && gestureState.x0 + gestureState.dx < 141.66) {
             console.log('love')
-          } else if (gestureState.x0 + gestureState.dx >= 140 && gestureState.x0 + gestureState.dx < 190) {
+            if (this.state.currentIconFocus !== 2) {
+              this.handleWhenDragBetweenIcon(2)
+            }
+          } else if (gestureState.x0 + gestureState.dx >= 141.66 && gestureState.x0 + gestureState.dx < 194.99) {
             console.log('haha')
-          } else if (gestureState.x0 + gestureState.dx >= 190 && gestureState.x0 + gestureState.dx < 240) {
+            if (this.state.currentIconFocus !== 3) {
+              this.handleWhenDragBetweenIcon(3)
+            }
+          } else if (gestureState.x0 + gestureState.dx >= 194.99 && gestureState.x0 + gestureState.dx < 248.32) {
             console.log('wow')
-          } else if (gestureState.x0 + gestureState.dx >= 240 && gestureState.x0 + gestureState.dx < 290) {
+            if (this.state.currentIconFocus !== 4) {
+              this.handleWhenDragBetweenIcon(4)
+            }
+          } else if (gestureState.x0 + gestureState.dx >= 248.32 && gestureState.x0 + gestureState.dx < 301.65) {
             console.log('sad')
-          } else if (gestureState.x0 + gestureState.dx >= 290 && gestureState.x0 + gestureState.dx <= 360) {
+            if (this.state.currentIconFocus !== 5) {
+              this.handleWhenDragBetweenIcon(5)
+            }
+          } else if (gestureState.x0 + gestureState.dx >= 301.65 && gestureState.x0 + gestureState.dx <= 354.98) {
             console.log('angry')
+            if (this.state.currentIconFocus !== 6) {
+              this.handleWhenDragBetweenIcon(6)
+            }
           }
         } else {
           console.log('outside')
+          this.setState({
+            whichIconUserChoose: 0,
+            previousIconFocus: 0,
+            currentIconFocus: 0,
+            isFirstDragging: true,
+          })
+
+          if (this.state.isDragging && !this.state.isDraggingOutside) {
+            this.setState({
+              isDragging: false,
+              isDraggingOutside: true,
+            })
+          }
         }
       },
       onPanResponderRelease: (evt, gestureState) => {
@@ -476,7 +506,10 @@ export default class AnimationScreen extends Component {
       previousIconFocus: this.currentIconFocus,
       currentIconFocus: currentIcon,
     })
+    this.controlIconWhenDrag()
+  }
 
+  controlIconWhenDrag () {
     this.zoomIconChosen.setValue(1)
     this.zoomIconChosen.setValue(1)
     this.zoomBoxIcon.setValue(1)
@@ -495,6 +528,21 @@ export default class AnimationScreen extends Component {
         duration: this.durationAnimationIconWhenDrag * this.timeDilation
       })
     ]).start()
+  }
+
+  controlIconWhenFirstDrag () {
+    this.zoomIconWhenFirstDrag.setValue(1)
+
+    Animated.timing(this.zoomIconWhenFirstDrag, {
+      toValue: 0.8,
+      duration: this.durationAnimationIconWhenDrag * this.timeDilation
+    }).start(this.onAnimationIconWhenFirstDragComplete)
+  }
+
+  onAnimationIconWhenFirstDragComplete = () => {
+    this.setState({
+      isFirstDragging: false,
+    })
   }
 
   render () {
@@ -571,7 +619,13 @@ export default class AnimationScreen extends Component {
         <View style={styles.viewWrapIcon}>
           <Animated.View style={{
             marginBottom: this.pushIconLikeUp, transform: [{
-              scale: 1.8
+              scale: this.state.isDragging ?
+                (this.state.currentIconFocus === 1 ?
+                  this.zoomIconChosen :
+                  (this.state.previousIconFocus === 1 ?
+                    this.zoomIconNotChosen :
+                    this.state.isFirstDragging ? this.zoomIconWhenFirstDrag : 0.8)) :
+                this.state.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconLike
             }],
           }}>
             <FastImage
@@ -585,7 +639,17 @@ export default class AnimationScreen extends Component {
 
         {/* Icon love */}
         <View style={styles.viewWrapIcon}>
-          <Animated.View style={{marginBottom: this.pushIconLoveUp, transform: [{scale: this.zoomIconLove}]}}>
+          <Animated.View style={{
+            marginBottom: this.pushIconLoveUp, transform: [{
+              scale: this.state.isDragging ?
+                (this.state.currentIconFocus === 2 ?
+                  this.zoomIconChosen :
+                  (this.state.previousIconFocus === 2 ?
+                    this.zoomIconNotChosen :
+                    this.state.isFirstDragging ? this.zoomIconWhenFirstDrag : 0.8)) :
+                this.state.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconLove
+            }]
+          }}>
             <FastImage
               style={{
                 width: 40,
@@ -597,7 +661,17 @@ export default class AnimationScreen extends Component {
 
         {/* Icon haha */}
         <View style={styles.viewWrapIcon}>
-          <Animated.View style={{marginBottom: this.pushIconHahaUp, transform: [{scale: this.zoomIconHaha}]}}>
+          <Animated.View style={{
+            marginBottom: this.pushIconHahaUp, transform: [{
+              scale: this.state.isDragging ?
+                (this.state.currentIconFocus === 3 ?
+                  this.zoomIconChosen :
+                  (this.state.previousIconFocus === 3 ?
+                    this.zoomIconNotChosen :
+                    this.state.isFirstDragging ? this.zoomIconWhenFirstDrag : 0.8)) :
+                this.state.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconHaha
+            }]
+          }}>
             <FastImage
               style={{
                 width: 40,
@@ -609,7 +683,17 @@ export default class AnimationScreen extends Component {
 
         {/* Icon wow */}
         <View style={styles.viewWrapIcon}>
-          <Animated.View style={{marginBottom: this.pushIconWowUp, transform: [{scale: this.zoomIconWow}]}}>
+          <Animated.View style={{
+            marginBottom: this.pushIconWowUp, transform: [{
+              scale: this.state.isDragging ?
+                (this.state.currentIconFocus === 4 ?
+                  this.zoomIconChosen :
+                  (this.state.previousIconFocus === 4 ?
+                    this.zoomIconNotChosen :
+                    this.state.isFirstDragging ? this.zoomIconWhenFirstDrag : 0.8)) :
+                this.state.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconWow
+            }]
+          }}>
             <FastImage
               style={{
                 width: 40,
@@ -621,7 +705,17 @@ export default class AnimationScreen extends Component {
 
         {/* Icon sad */}
         <View style={styles.viewWrapIcon}>
-          <Animated.View style={{marginBottom: this.pushIconSadUp, transform: [{scale: this.zoomIconSad}]}}>
+          <Animated.View style={{
+            marginBottom: this.pushIconSadUp, transform: [{
+              scale: this.state.isDragging ?
+                (this.state.currentIconFocus === 5 ?
+                  this.zoomIconChosen :
+                  (this.state.previousIconFocus === 5 ?
+                    this.zoomIconNotChosen :
+                    this.state.isFirstDragging ? this.zoomIconWhenFirstDrag : 0.8)) :
+                this.state.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconSad
+            }]
+          }}>
             <FastImage
               style={{
                 width: 40,
@@ -633,7 +727,17 @@ export default class AnimationScreen extends Component {
 
         {/* Icon angry */}
         <View style={styles.viewWrapIcon}>
-          <Animated.View style={{marginBottom: this.pushIconAngryUp, transform: [{scale: this.zoomIconAngry}]}}>
+          <Animated.View style={{
+            marginBottom: this.pushIconAngryUp, transform: [{
+              scale: this.state.isDragging ?
+                (this.state.currentIconFocus === 6 ?
+                  this.zoomIconChosen :
+                  (this.state.previousIconFocus === 6 ?
+                    this.zoomIconNotChosen :
+                    this.state.isFirstDragging ? this.zoomIconWhenFirstDrag : 0.8)) :
+                this.state.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconAngry
+            }]
+          }}>
             <FastImage
               style={{
                 width: 40,
