@@ -76,10 +76,10 @@ export default class AnimationScreen extends Component {
     // Animation for zoom icons when drag
     this.zoomIconChosen = new Animated.Value(1)
     this.zoomIconNotChosen = new Animated.Value(1)
-    this.zoomBoxIcon = new Animated.Value(1)
     this.zoomIconWhenDragOutside = new Animated.Value(1)
     this.zoomIconWhenFirstDrag = new Animated.Value(1)
-    this.zoomBoxWhenDragOutside = new Animated.Value(1)
+    this.zoomBoxWhenDragInside = new Animated.Value(1)
+    this.zoomBoxWhenDragOutside = new Animated.Value(0.95)
 
     // ------------------------------------------------------------------------------
     // For jump icon when release
@@ -103,6 +103,11 @@ export default class AnimationScreen extends Component {
     BackHandler.removeEventListener('hardwareBackPress', this.backPress)
   }
 
+  handleBackPress () {
+    this.props.navigation.goBack()
+    return true
+  }
+
   setupPanResponder () {
     this.rootPanResponder = PanResponder.create({
       onMoveShouldSetPanResponder: (evt, gestureState) => !this.isTouchBtn,
@@ -110,8 +115,12 @@ export default class AnimationScreen extends Component {
       onPanResponderGrant: (evt, gestureState) => {
         // console.log('on grant')
       },
+
       onPanResponderMove: (evt, gestureState) => {
         // console.log('on move', gestureState)
+
+        // return if the drag is drag without touch button
+        if (!this.state.isLongTouch) return
 
         // the margin top the box is 100
         // and plus the height of toolbar and the status bar
@@ -171,36 +180,46 @@ export default class AnimationScreen extends Component {
               isDragging: false,
               isDraggingOutside: true,
             })
+            this.controlBoxWhenDragOutside()
+            // this.controlIconWhenDragOutside()
           }
         }
       },
+
       onPanResponderRelease: (evt, gestureState) => {
         // console.log('on release')
-        this.doAnimationLongTouchReverse()
+        this.setState({
+          isDragging: false,
+          isDraggingOutside: false,
+          isFirstDragging: true,
+          previousIconFocus: 0,
+          currentIconFocus: 0
+        })
+        this.onDragRelease()
       }
     })
   }
 
-  handleBackPress () {
-    this.props.navigation.goBack()
-    return true
-  }
-
   onTouchStart = () => {
-    this.isTouchBtn = true
     console.log('touch start')
-    this.timer = setTimeout(this.doAnimationLongTouch, this.durationLongPress)
+
+    this.isTouchBtn = true
+
+    this.timerMeasureLongTouch = setTimeout(this.doAnimationLongTouch, this.durationLongPress)
   }
 
   onTouchEnd = () => {
-    this.isTouchBtn = false
     console.log('touch end')
+
+    this.isTouchBtn = false
     if (!this.state.isLongTouch) {
-      clearTimeout(this.timer)
+      clearTimeout(this.timerMeasureLongTouch)
       this.doAnimationQuickTouch()
-    } else {
-      // this.doAnimationLongTouchReverse()
     }
+  }
+
+  onDragRelease = () => {
+    this.doAnimationLongTouchReverse()
   }
 
   doAnimationQuickTouch = () => {
@@ -503,16 +522,16 @@ export default class AnimationScreen extends Component {
   handleWhenDragBetweenIcon = (currentIcon) => {
     this.setState({
       whichIconUserChoose: currentIcon,
-      previousIconFocus: this.currentIconFocus,
+      previousIconFocus: this.state.currentIconFocus,
       currentIconFocus: currentIcon,
     })
     this.controlIconWhenDrag()
   }
 
-  controlIconWhenDrag () {
+  controlIconWhenDrag = () => {
     this.zoomIconChosen.setValue(1)
     this.zoomIconChosen.setValue(1)
-    this.zoomBoxIcon.setValue(1)
+    this.zoomBoxWhenDragInside.setValue(1)
 
     Animated.parallel([
       Animated.timing(this.zoomIconChosen, {
@@ -523,14 +542,14 @@ export default class AnimationScreen extends Component {
         toValue: 0.8,
         duration: this.durationAnimationIconWhenDrag * this.timeDilation
       }),
-      Animated.timing(this.zoomBoxIcon, {
-        toValue: 0.9,
+      Animated.timing(this.zoomBoxWhenDragInside, {
+        toValue: 0.95,
         duration: this.durationAnimationIconWhenDrag * this.timeDilation
       })
     ]).start()
   }
 
-  controlIconWhenFirstDrag () {
+  controlIconWhenFirstDrag = () => {
     this.zoomIconWhenFirstDrag.setValue(1)
 
     Animated.timing(this.zoomIconWhenFirstDrag, {
@@ -539,10 +558,39 @@ export default class AnimationScreen extends Component {
     }).start(this.onAnimationIconWhenFirstDragComplete)
   }
 
+  controlIconWhenDragOutside = () => {
+    this.zoomIconWhenDragOutside.setValue(0.8)
+
+    Animated.timing(this.zoomIconWhenDragOutside, {
+      toValue: 1.0,
+      duration: this.durationAnimationIconWhenDrag * this.timeDilation
+    })
+  }
+
   onAnimationIconWhenFirstDragComplete = () => {
     this.setState({
       isFirstDragging: false,
     })
+  }
+
+  controlBoxWhenDragOutside = () => {
+    this.zoomBoxWhenDragOutside.setValue(0.95)
+
+    Animated.timing(this.zoomBoxWhenDragOutside, {
+      toValue: 1.0,
+      duration: this.durationAnimationIconWhenDrag * this.timeDilation
+    }).start()
+  }
+
+  controlIconWhenRelease = () => {
+    this.zoomIconWhenRelease.setValue(1.8)
+
+    Animated.parallel([
+      Animated.timing(this.zoomIconWhenRelease, {
+        toValue: 0,
+        duration: this.durationAnimationIconWhenRelease * this.timeDilation
+      })
+    ])
   }
 
   render () {
@@ -584,7 +632,14 @@ export default class AnimationScreen extends Component {
           <View style={styles.viewContent}>
 
             {/* Box */}
-            <Animated.View style={[styles.viewBox, {opacity: this.fadeBoxAnim}]}/>
+            <Animated.View style={[styles.viewBox, {
+              opacity: this.fadeBoxAnim,
+              transform: [{
+                scale: this.state.isDragging ?
+                  (this.state.previousIconFocus === 0 ? this.zoomBoxWhenDragInside : 0.95) :
+                  this.state.isDraggingOutside ? this.zoomBoxWhenDragOutside : 1.0
+              }]
+            }]}/>
 
             {/* Group icon */}
             {this.renderGroupIcon()}
