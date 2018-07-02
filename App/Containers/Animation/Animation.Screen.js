@@ -27,7 +27,7 @@ export default class AnimationScreen extends Component {
       previousIconFocus: 0,
       isDragging: false,
       isDraggingOutside: false,
-      isFirstDragging: true,
+      isJustDragInside: true,
     }
 
     // Duration animation
@@ -77,7 +77,7 @@ export default class AnimationScreen extends Component {
     this.zoomIconChosen = new Animated.Value(1)
     this.zoomIconNotChosen = new Animated.Value(1)
     this.zoomIconWhenDragOutside = new Animated.Value(1)
-    this.zoomIconWhenFirstDrag = new Animated.Value(1)
+    this.zoomIconWhenDragInside = new Animated.Value(1)
     this.zoomBoxWhenDragInside = new Animated.Value(1)
     this.zoomBoxWhenDragOutside = new Animated.Value(0.95)
 
@@ -131,8 +131,8 @@ export default class AnimationScreen extends Component {
             isDraggingOutside: false
           })
 
-          if (this.state.isFirstDragging) {
-            this.controlIconWhenFirstDrag()
+          if (this.state.isJustDragInside) {
+            this.controlIconWhenDragInside()
           }
 
           if (gestureState.x0 + gestureState.dx >= 35 && gestureState.x0 + gestureState.dx < 88.33) {
@@ -172,7 +172,7 @@ export default class AnimationScreen extends Component {
             whichIconUserChoose: 0,
             previousIconFocus: 0,
             currentIconFocus: 0,
-            isFirstDragging: true,
+            isJustDragInside: true,
           })
 
           if (this.state.isDragging && !this.state.isDraggingOutside) {
@@ -181,7 +181,7 @@ export default class AnimationScreen extends Component {
               isDraggingOutside: true,
             })
             this.controlBoxWhenDragOutside()
-            // this.controlIconWhenDragOutside()
+            this.controlIconWhenDragOutside()
           }
         }
       },
@@ -191,7 +191,7 @@ export default class AnimationScreen extends Component {
         this.setState({
           isDragging: false,
           isDraggingOutside: false,
-          isFirstDragging: true,
+          isJustDragInside: true,
           previousIconFocus: 0,
           currentIconFocus: 0
         })
@@ -549,13 +549,19 @@ export default class AnimationScreen extends Component {
     ]).start()
   }
 
-  controlIconWhenFirstDrag = () => {
-    this.zoomIconWhenFirstDrag.setValue(1)
+  controlIconWhenDragInside = () => {
+    this.zoomIconWhenDragInside.setValue(1.0)
 
-    Animated.timing(this.zoomIconWhenFirstDrag, {
+    Animated.timing(this.zoomIconWhenDragInside, {
       toValue: 0.8,
       duration: this.durationAnimationIconWhenDrag * this.timeDilation
-    }).start(this.onAnimationIconWhenFirstDragComplete)
+    }).start(this.onAnimationIconWhenDragInsideComplete)
+  }
+
+  onAnimationIconWhenDragInsideComplete = () => {
+    this.setState({
+      isJustDragInside: false,
+    })
   }
 
   controlIconWhenDragOutside = () => {
@@ -564,13 +570,7 @@ export default class AnimationScreen extends Component {
     Animated.timing(this.zoomIconWhenDragOutside, {
       toValue: 1.0,
       duration: this.durationAnimationIconWhenDrag * this.timeDilation
-    })
-  }
-
-  onAnimationIconWhenFirstDragComplete = () => {
-    this.setState({
-      isFirstDragging: false,
-    })
+    }).start()
   }
 
   controlBoxWhenDragOutside = () => {
@@ -679,7 +679,7 @@ export default class AnimationScreen extends Component {
                   this.zoomIconChosen :
                   (this.state.previousIconFocus === 1 ?
                     this.zoomIconNotChosen :
-                    this.state.isFirstDragging ? this.zoomIconWhenFirstDrag : 0.8)) :
+                    this.state.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
                 this.state.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconLike
             }],
           }}>
@@ -701,7 +701,7 @@ export default class AnimationScreen extends Component {
                   this.zoomIconChosen :
                   (this.state.previousIconFocus === 2 ?
                     this.zoomIconNotChosen :
-                    this.state.isFirstDragging ? this.zoomIconWhenFirstDrag : 0.8)) :
+                    this.state.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
                 this.state.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconLove
             }]
           }}>
@@ -723,7 +723,7 @@ export default class AnimationScreen extends Component {
                   this.zoomIconChosen :
                   (this.state.previousIconFocus === 3 ?
                     this.zoomIconNotChosen :
-                    this.state.isFirstDragging ? this.zoomIconWhenFirstDrag : 0.8)) :
+                    this.state.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
                 this.state.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconHaha
             }]
           }}>
@@ -745,7 +745,7 @@ export default class AnimationScreen extends Component {
                   this.zoomIconChosen :
                   (this.state.previousIconFocus === 4 ?
                     this.zoomIconNotChosen :
-                    this.state.isFirstDragging ? this.zoomIconWhenFirstDrag : 0.8)) :
+                    this.state.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
                 this.state.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconWow
             }]
           }}>
@@ -767,7 +767,7 @@ export default class AnimationScreen extends Component {
                   this.zoomIconChosen :
                   (this.state.previousIconFocus === 5 ?
                     this.zoomIconNotChosen :
-                    this.state.isFirstDragging ? this.zoomIconWhenFirstDrag : 0.8)) :
+                    this.state.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
                 this.state.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconSad
             }]
           }}>
@@ -789,7 +789,7 @@ export default class AnimationScreen extends Component {
                   this.zoomIconChosen :
                   (this.state.previousIconFocus === 6 ?
                     this.zoomIconNotChosen :
-                    this.state.isFirstDragging ? this.zoomIconWhenFirstDrag : 0.8)) :
+                    this.state.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
                 this.state.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconAngry
             }]
           }}>
