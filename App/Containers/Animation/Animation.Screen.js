@@ -19,16 +19,15 @@ export default class AnimationScreen extends Component {
     // Variables to check
     // 0 = nothing, 1 = like, 2 = love, 3 = haha, 4 = wow, 5 = sad, 6 = angry
     this.isTouchBtn = false
-    this.state = {
-      isLongTouch: false,
-      isLiked: false,
-      whichIconUserChoose: 0,
-      currentIconFocus: 0,
-      previousIconFocus: 0,
-      isDragging: false,
-      isDraggingOutside: false,
-      isJustDragInside: true,
-    }
+
+    this.isLongTouch = false
+    this.isLiked = false
+    this.whichIconUserChoose = 0
+    this.currentIconFocus = 0
+    this.previousIconFocus = 0
+    this.isDragging = false
+    this.isDraggingOutside = false
+    this.isJustDragInside = true
 
     // Duration animation
     this.durationAnimationBox = 500
@@ -120,66 +119,66 @@ export default class AnimationScreen extends Component {
         // console.log('on move', gestureState)
 
         // return if the drag is drag without touch button
-        if (!this.state.isLongTouch) return
+        if (!this.isLongTouch) return
 
         // the margin top the box is 100
         // and plus the height of toolbar and the status bar
         // so the range we check is about 150 -> 450
         if (gestureState.y0 + gestureState.dy >= 150 && gestureState.y0 + gestureState.dy <= 450) {
-          this.setState({
-            isDragging: true,
-            isDraggingOutside: false
-          })
 
-          if (this.state.isJustDragInside) {
+          this.isDragging = true
+          this.isDraggingOutside = false
+          this.setState({})
+
+          if (this.isJustDragInside) {
             this.controlIconWhenDragInside()
           }
 
           if (gestureState.x0 + gestureState.dx >= 35 && gestureState.x0 + gestureState.dx < 88.33) {
-            console.log('like')
-            if (this.state.currentIconFocus !== 1) {
+            // console.log('like')
+            if (this.currentIconFocus !== 1) {
               this.handleWhenDragBetweenIcon(1)
             }
           } else if (gestureState.x0 + gestureState.dx >= 88.33 && gestureState.x0 + gestureState.dx < 141.66) {
-            console.log('love')
-            if (this.state.currentIconFocus !== 2) {
+            // console.log('love')
+            if (this.currentIconFocus !== 2) {
               this.handleWhenDragBetweenIcon(2)
             }
           } else if (gestureState.x0 + gestureState.dx >= 141.66 && gestureState.x0 + gestureState.dx < 194.99) {
-            console.log('haha')
-            if (this.state.currentIconFocus !== 3) {
+            // console.log('haha')
+            if (this.currentIconFocus !== 3) {
               this.handleWhenDragBetweenIcon(3)
             }
           } else if (gestureState.x0 + gestureState.dx >= 194.99 && gestureState.x0 + gestureState.dx < 248.32) {
-            console.log('wow')
-            if (this.state.currentIconFocus !== 4) {
+            // console.log('wow')
+            if (this.currentIconFocus !== 4) {
               this.handleWhenDragBetweenIcon(4)
             }
           } else if (gestureState.x0 + gestureState.dx >= 248.32 && gestureState.x0 + gestureState.dx < 301.65) {
-            console.log('sad')
-            if (this.state.currentIconFocus !== 5) {
+            // console.log('sad')
+            if (this.currentIconFocus !== 5) {
               this.handleWhenDragBetweenIcon(5)
             }
           } else if (gestureState.x0 + gestureState.dx >= 301.65 && gestureState.x0 + gestureState.dx <= 354.98) {
-            console.log('angry')
-            if (this.state.currentIconFocus !== 6) {
+            // console.log('angry')
+            if (this.currentIconFocus !== 6) {
               this.handleWhenDragBetweenIcon(6)
             }
           }
         } else {
-          console.log('outside')
-          this.setState({
-            whichIconUserChoose: 0,
-            previousIconFocus: 0,
-            currentIconFocus: 0,
-            isJustDragInside: true,
-          })
+          // console.log('outside')
 
-          if (this.state.isDragging && !this.state.isDraggingOutside) {
-            this.setState({
-              isDragging: false,
-              isDraggingOutside: true,
-            })
+          this.whichIconUserChoose = 0
+          this.previousIconFocus = 0
+          this.currentIconFocus = 0
+          this.isJustDragInside = true
+          this.setState({})
+
+          if (this.isDragging && !this.isDraggingOutside) {
+            this.isDragging = false
+            this.isDraggingOutside = true
+            this.setState({})
+
             this.controlBoxWhenDragOutside()
             this.controlIconWhenDragOutside()
           }
@@ -188,31 +187,33 @@ export default class AnimationScreen extends Component {
 
       onPanResponderRelease: (evt, gestureState) => {
         // console.log('on release')
-        this.setState({
-          isDragging: false,
-          isDraggingOutside: false,
-          isJustDragInside: true,
-          previousIconFocus: 0,
-          currentIconFocus: 0
-        })
+
+        this.isDragging = false
+        this.isDraggingOutside = false
+        this.isJustDragInside = true
+        this.previousIconFocus = 0
+        this.currentIconFocus = 0
+        this.setState({})
+
         this.onDragRelease()
       }
     })
   }
 
   onTouchStart = () => {
-    console.log('touch start')
-
+    // console.log('touch start')
     this.isTouchBtn = true
+    this.setState({})
 
     this.timerMeasureLongTouch = setTimeout(this.doAnimationLongTouch, this.durationLongPress)
   }
 
   onTouchEnd = () => {
-    console.log('touch end')
-
+    // console.log('touch end')
     this.isTouchBtn = false
-    if (!this.state.isLongTouch) {
+    this.setState({})
+
+    if (!this.isLongTouch) {
       clearTimeout(this.timerMeasureLongTouch)
       this.doAnimationQuickTouch()
     }
@@ -223,10 +224,11 @@ export default class AnimationScreen extends Component {
   }
 
   doAnimationQuickTouch = () => {
-    if (!this.state.isLiked) {
-      this.setState({
-        isLiked: true
-      })
+    if (!this.isLiked) {
+
+      this.isLiked = true
+      this.setState({})
+
       this.tiltIconAnim.setValue(0)
       this.zoomIconAnim.setValue(0)
       this.zoomTextAnim.setValue(0)
@@ -245,9 +247,9 @@ export default class AnimationScreen extends Component {
         })
       ]).start()
     } else {
-      this.setState({
-        isLiked: false
-      })
+      this.isLiked = false
+      this.setState({})
+
       this.tiltIconAnim.setValue(1)
       this.zoomIconAnim.setValue(1)
       this.zoomTextAnim.setValue(1)
@@ -269,9 +271,9 @@ export default class AnimationScreen extends Component {
   }
 
   doAnimationLongTouch = () => {
-    this.setState({
-      isLongTouch: true
-    })
+
+    this.isLongTouch = true
+    this.setState({})
 
     this.tiltIconAnim2.setValue(0)
     this.zoomIconAnim2.setValue(1)
@@ -514,21 +516,25 @@ export default class AnimationScreen extends Component {
   }
 
   onAnimationLongTouchComplete = () => {
-    this.setState({
-      isLongTouch: false
-    })
+    this.isLongTouch = false
+    this.setState({})
   }
 
   handleWhenDragBetweenIcon = (currentIcon) => {
-    this.setState({
-      whichIconUserChoose: currentIcon,
-      previousIconFocus: this.state.currentIconFocus,
-      currentIconFocus: currentIcon,
-    })
+    this.whichIconUserChoose = currentIcon
+    this.previousIconFocus = this.currentIconFocus
+    this.currentIconFocus = currentIcon
+    this.setState({})
+
     this.controlIconWhenDrag()
   }
 
   controlIconWhenDrag = () => {
+
+    console.log('whichIconUserChoose ', this.whichIconUserChoose)
+    console.log('previousIconFocus ', this.previousIconFocus)
+    console.log('currentIconFocus ', this.currentIconFocus)
+
     this.zoomIconChosen.setValue(1)
     this.zoomIconChosen.setValue(1)
     this.zoomBoxWhenDragInside.setValue(1)
@@ -559,9 +565,8 @@ export default class AnimationScreen extends Component {
   }
 
   onAnimationIconWhenDragInsideComplete = () => {
-    this.setState({
-      isJustDragInside: false,
-    })
+    this.isJustDragInside = false
+    this.setState({})
   }
 
   controlIconWhenDragOutside = () => {
@@ -635,9 +640,9 @@ export default class AnimationScreen extends Component {
             <Animated.View style={[styles.viewBox, {
               opacity: this.fadeBoxAnim,
               transform: [{
-                scale: this.state.isDragging ?
-                  (this.state.previousIconFocus === 0 ? this.zoomBoxWhenDragInside : 0.95) :
-                  this.state.isDraggingOutside ? this.zoomBoxWhenDragOutside : 1.0
+                scale: this.isDragging ?
+                  (this.previousIconFocus === 0 ? this.zoomBoxWhenDragInside : 0.95) :
+                  this.isDraggingOutside ? this.zoomBoxWhenDragOutside : 1.0
               }]
             }]}/>
 
@@ -646,16 +651,16 @@ export default class AnimationScreen extends Component {
 
             {/* Button */}
             <View style={styles.viewBtn} onTouchStart={this.onTouchStart} onTouchEnd={this.onTouchEnd}>
-              <Animated.Image source={this.state.isLiked ? images.like_static_fill : images.like_static}
+              <Animated.Image source={this.isLiked ? images.like_static_fill : images.like_static}
                               style={[styles.imgLikeInBtn,
                                 {
                                   transform: [
-                                    {rotate: this.state.isLongTouch ? tiltBounceIconAnim2 : tiltBounceIconAnim},
-                                    {scale: this.state.isLongTouch ? this.zoomIconAnim2 : zoomBounceIconAnim}]
+                                    {rotate: this.isLongTouch ? tiltBounceIconAnim2 : tiltBounceIconAnim},
+                                    {scale: this.isLongTouch ? this.zoomIconAnim2 : zoomBounceIconAnim}]
                                 }]}/>
               <Animated.Text
-                style={[styles.textBtn, {color: this.state.isLiked ? '#3b5998' : 'grey'},
-                  {transform: [{scale: this.state.isLongTouch ? this.zoomTextAnim2 : zoomBounceTextAnim}]}]}>
+                style={[styles.textBtn, {color: this.isLiked ? '#3b5998' : 'grey'},
+                  {transform: [{scale: this.isLongTouch ? this.zoomTextAnim2 : zoomBounceTextAnim}]}]}>
                 Like
               </Animated.Text>
             </View>
@@ -671,136 +676,124 @@ export default class AnimationScreen extends Component {
       <Animated.View style={[styles.viewWrapGroupIcon, {marginLeft: this.moveRightGroupIcon}]}>
 
         {/* Icon like */}
-        <View style={styles.viewWrapIcon}>
-          <Animated.View style={{
-            marginBottom: this.pushIconLikeUp, transform: [{
-              scale: this.state.isDragging ?
-                (this.state.currentIconFocus === 1 ?
-                  this.zoomIconChosen :
-                  (this.state.previousIconFocus === 1 ?
-                    this.zoomIconNotChosen :
-                    this.state.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
-                this.state.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconLike
-            }],
-          }}>
-            <FastImage
-              style={{
-                width: 40,
-                height: 40
-              }}
-              source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/like.gif'}}/>
-          </Animated.View>
-        </View>
+        <Animated.View style={{
+          marginBottom: this.pushIconLikeUp, transform: [{
+            scale: this.isDragging ?
+              (this.currentIconFocus === 1 ?
+                this.zoomIconChosen :
+                (this.previousIconFocus === 1 ?
+                  this.zoomIconNotChosen :
+                  this.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
+              this.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconLike
+          }],
+        }}>
+          <FastImage
+            style={{
+              width: 40,
+              height: 40
+            }}
+            source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/like.gif'}}/>
+        </Animated.View>
 
         {/* Icon love */}
-        <View style={styles.viewWrapIcon}>
-          <Animated.View style={{
-            marginBottom: this.pushIconLoveUp, transform: [{
-              scale: this.state.isDragging ?
-                (this.state.currentIconFocus === 2 ?
-                  this.zoomIconChosen :
-                  (this.state.previousIconFocus === 2 ?
-                    this.zoomIconNotChosen :
-                    this.state.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
-                this.state.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconLove
-            }]
-          }}>
-            <FastImage
-              style={{
-                width: 40,
-                height: 40
-              }}
-              source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/love.gif'}}/>
-          </Animated.View>
-        </View>
+        <Animated.View style={{
+          marginBottom: this.pushIconLoveUp, transform: [{
+            scale: this.isDragging ?
+              (this.currentIconFocus === 2 ?
+                this.zoomIconChosen :
+                (this.previousIconFocus === 2 ?
+                  this.zoomIconNotChosen :
+                  this.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
+              this.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconLove
+          }]
+        }}>
+          <FastImage
+            style={{
+              width: 40,
+              height: 40
+            }}
+            source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/love.gif'}}/>
+        </Animated.View>
 
         {/* Icon haha */}
-        <View style={styles.viewWrapIcon}>
-          <Animated.View style={{
-            marginBottom: this.pushIconHahaUp, transform: [{
-              scale: this.state.isDragging ?
-                (this.state.currentIconFocus === 3 ?
-                  this.zoomIconChosen :
-                  (this.state.previousIconFocus === 3 ?
-                    this.zoomIconNotChosen :
-                    this.state.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
-                this.state.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconHaha
-            }]
-          }}>
-            <FastImage
-              style={{
-                width: 40,
-                height: 40
-              }}
-              source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/haha.gif'}}/>
-          </Animated.View>
-        </View>
+        <Animated.View style={{
+          marginBottom: this.pushIconHahaUp, transform: [{
+            scale: this.isDragging ?
+              (this.currentIconFocus === 3 ?
+                this.zoomIconChosen :
+                (this.previousIconFocus === 3 ?
+                  this.zoomIconNotChosen :
+                  this.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
+              this.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconHaha
+          }]
+        }}>
+          <FastImage
+            style={{
+              width: 40,
+              height: 40
+            }}
+            source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/haha.gif'}}/>
+        </Animated.View>
 
         {/* Icon wow */}
-        <View style={styles.viewWrapIcon}>
-          <Animated.View style={{
-            marginBottom: this.pushIconWowUp, transform: [{
-              scale: this.state.isDragging ?
-                (this.state.currentIconFocus === 4 ?
-                  this.zoomIconChosen :
-                  (this.state.previousIconFocus === 4 ?
-                    this.zoomIconNotChosen :
-                    this.state.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
-                this.state.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconWow
-            }]
-          }}>
-            <FastImage
-              style={{
-                width: 40,
-                height: 40
-              }}
-              source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/wow.gif'}}/>
-          </Animated.View>
-        </View>
+        <Animated.View style={{
+          marginBottom: this.pushIconWowUp, transform: [{
+            scale: this.isDragging ?
+              (this.currentIconFocus === 4 ?
+                this.zoomIconChosen :
+                (this.previousIconFocus === 4 ?
+                  this.zoomIconNotChosen :
+                  this.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
+              this.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconWow
+          }]
+        }}>
+          <FastImage
+            style={{
+              width: 40,
+              height: 40
+            }}
+            source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/wow.gif'}}/>
+        </Animated.View>
 
         {/* Icon sad */}
-        <View style={styles.viewWrapIcon}>
-          <Animated.View style={{
-            marginBottom: this.pushIconSadUp, transform: [{
-              scale: this.state.isDragging ?
-                (this.state.currentIconFocus === 5 ?
-                  this.zoomIconChosen :
-                  (this.state.previousIconFocus === 5 ?
-                    this.zoomIconNotChosen :
-                    this.state.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
-                this.state.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconSad
-            }]
-          }}>
-            <FastImage
-              style={{
-                width: 40,
-                height: 40
-              }}
-              source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/sad.gif'}}/>
-          </Animated.View>
-        </View>
+        <Animated.View style={{
+          marginBottom: this.pushIconSadUp, transform: [{
+            scale: this.isDragging ?
+              (this.currentIconFocus === 5 ?
+                this.zoomIconChosen :
+                (this.previousIconFocus === 5 ?
+                  this.zoomIconNotChosen :
+                  this.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
+              this.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconSad
+          }]
+        }}>
+          <FastImage
+            style={{
+              width: 40,
+              height: 40
+            }}
+            source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/sad.gif'}}/>
+        </Animated.View>
 
         {/* Icon angry */}
-        <View style={styles.viewWrapIcon}>
-          <Animated.View style={{
-            marginBottom: this.pushIconAngryUp, transform: [{
-              scale: this.state.isDragging ?
-                (this.state.currentIconFocus === 6 ?
-                  this.zoomIconChosen :
-                  (this.state.previousIconFocus === 6 ?
-                    this.zoomIconNotChosen :
-                    this.state.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
-                this.state.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconAngry
-            }]
-          }}>
-            <FastImage
-              style={{
-                width: 40,
-                height: 40
-              }}
-              source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/angry.gif'}}/>
-          </Animated.View>
-        </View>
+        <Animated.View style={{
+          marginBottom: this.pushIconAngryUp, transform: [{
+            scale: this.isDragging ?
+              (this.currentIconFocus === 6 ?
+                this.zoomIconChosen :
+                (this.previousIconFocus === 6 ?
+                  this.zoomIconNotChosen :
+                  this.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
+              this.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconAngry
+          }]
+        }}>
+          <FastImage
+            style={{
+              width: 40,
+              height: 40
+            }}
+            source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/angry.gif'}}/>
+        </Animated.View>
 
       </Animated.View>
     )
