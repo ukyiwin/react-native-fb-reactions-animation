@@ -528,16 +528,10 @@ export default class AnimationScreen extends Component {
     this.previousIconFocus = this.currentIconFocus
     this.currentIconFocus = currentIcon
 
-    // Need timeout so logic at render function can update
-    setTimeout(this.controlIconWhenDrag, 50)
+    this.controlIconWhenDrag()
   }
 
   controlIconWhenDrag = () => {
-
-    console.log('whichIconUserChoose ', this.whichIconUserChoose)
-    console.log('previousIconFocus ', this.previousIconFocus)
-    console.log('currentIconFocus ', this.currentIconFocus)
-
     this.zoomIconChosen.setValue(0.8)
     this.zoomIconNotChosen.setValue(1.8)
     this.zoomBoxWhenDragInside.setValue(1.0)
@@ -545,7 +539,8 @@ export default class AnimationScreen extends Component {
     // For update logic at render function
     this.setState({})
 
-    Animated.parallel([
+    // Need timeout so logic check at render function can update
+    setTimeout(() => Animated.parallel([
       Animated.timing(this.zoomIconChosen, {
         toValue: 1.8,
         duration: this.durationAnimationIconWhenDrag * this.timeDilation,
@@ -558,7 +553,7 @@ export default class AnimationScreen extends Component {
         toValue: 0.95,
         duration: this.durationAnimationIconWhenDrag * this.timeDilation
       })
-    ]).start()
+    ]).start(), 50)
   }
 
   controlIconWhenDragInside = () => {
