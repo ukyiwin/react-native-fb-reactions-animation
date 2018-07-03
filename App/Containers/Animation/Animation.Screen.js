@@ -34,7 +34,6 @@ export default class AnimationScreen extends Component {
     this.durationAnimationQuickTouch = 500
     this.durationAnimationLongTouch = 150
     this.durationAnimationIconWhenDrag = 150
-    this.durationAnimationIconWhenRelease = 1000
 
     // ------------------------------------------------------------------------------
     // Animation button when quick touch button
@@ -128,39 +127,38 @@ export default class AnimationScreen extends Component {
 
           this.isDragging = true
           this.isDraggingOutside = false
-          this.setState({})
 
           if (this.isJustDragInside) {
             this.controlIconWhenDragInside()
           }
 
           if (gestureState.x0 + gestureState.dx >= 35 && gestureState.x0 + gestureState.dx < 88.33) {
-            // console.log('like')
+            console.log('like')
             if (this.currentIconFocus !== 1) {
               this.handleWhenDragBetweenIcon(1)
             }
           } else if (gestureState.x0 + gestureState.dx >= 88.33 && gestureState.x0 + gestureState.dx < 141.66) {
-            // console.log('love')
+            console.log('love')
             if (this.currentIconFocus !== 2) {
               this.handleWhenDragBetweenIcon(2)
             }
           } else if (gestureState.x0 + gestureState.dx >= 141.66 && gestureState.x0 + gestureState.dx < 194.99) {
-            // console.log('haha')
+            console.log('haha')
             if (this.currentIconFocus !== 3) {
               this.handleWhenDragBetweenIcon(3)
             }
           } else if (gestureState.x0 + gestureState.dx >= 194.99 && gestureState.x0 + gestureState.dx < 248.32) {
-            // console.log('wow')
+            console.log('wow')
             if (this.currentIconFocus !== 4) {
               this.handleWhenDragBetweenIcon(4)
             }
           } else if (gestureState.x0 + gestureState.dx >= 248.32 && gestureState.x0 + gestureState.dx < 301.65) {
-            // console.log('sad')
+            console.log('sad')
             if (this.currentIconFocus !== 5) {
               this.handleWhenDragBetweenIcon(5)
             }
           } else if (gestureState.x0 + gestureState.dx >= 301.65 && gestureState.x0 + gestureState.dx <= 354.98) {
-            // console.log('angry')
+            console.log('angry')
             if (this.currentIconFocus !== 6) {
               this.handleWhenDragBetweenIcon(6)
             }
@@ -172,7 +170,6 @@ export default class AnimationScreen extends Component {
           this.previousIconFocus = 0
           this.currentIconFocus = 0
           this.isJustDragInside = true
-          this.setState({})
 
           if (this.isDragging && !this.isDraggingOutside) {
             this.isDragging = false
@@ -530,9 +527,9 @@ export default class AnimationScreen extends Component {
     this.whichIconUserChoose = currentIcon
     this.previousIconFocus = this.currentIconFocus
     this.currentIconFocus = currentIcon
-    this.setState({})
 
-    this.controlIconWhenDrag()
+    // Need timeout so logic at render function can update
+    setTimeout(this.controlIconWhenDrag, 50)
   }
 
   controlIconWhenDrag = () => {
@@ -541,14 +538,17 @@ export default class AnimationScreen extends Component {
     console.log('previousIconFocus ', this.previousIconFocus)
     console.log('currentIconFocus ', this.currentIconFocus)
 
-    this.zoomIconChosen.setValue(1)
-    this.zoomIconNotChosen.setValue(1)
-    this.zoomBoxWhenDragInside.setValue(1)
+    this.zoomIconChosen.setValue(0.8)
+    this.zoomIconNotChosen.setValue(1.8)
+    this.zoomBoxWhenDragInside.setValue(1.0)
+
+    // For update logic at render function
+    this.setState({})
 
     Animated.parallel([
       Animated.timing(this.zoomIconChosen, {
         toValue: 1.8,
-        duration: this.durationAnimationIconWhenDrag * this.timeDilation
+        duration: this.durationAnimationIconWhenDrag * this.timeDilation,
       }),
       Animated.timing(this.zoomIconNotChosen, {
         toValue: 0.8,
@@ -562,8 +562,9 @@ export default class AnimationScreen extends Component {
   }
 
   controlIconWhenDragInside = () => {
-    this.zoomIconWhenDragInside.setValue(1.0)
+    this.setState({})
 
+    this.zoomIconWhenDragInside.setValue(1.0)
     Animated.timing(this.zoomIconWhenDragInside, {
       toValue: 0.8,
       duration: this.durationAnimationIconWhenDrag * this.timeDilation
@@ -591,17 +592,6 @@ export default class AnimationScreen extends Component {
       toValue: 1.0,
       duration: this.durationAnimationIconWhenDrag * this.timeDilation
     }).start()
-  }
-
-  controlIconWhenRelease = () => {
-    this.zoomIconWhenRelease.setValue(1.8)
-
-    Animated.parallel([
-      Animated.timing(this.zoomIconWhenRelease, {
-        toValue: 0,
-        duration: this.durationAnimationIconWhenRelease * this.timeDilation
-      })
-    ])
   }
 
   render () {
