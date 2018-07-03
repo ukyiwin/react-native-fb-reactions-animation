@@ -223,6 +223,8 @@ export default class AnimationScreen extends Component {
     this.doAnimationLongTouchReverse()
   }
 
+  // ------------------------------------------------------------------------------
+  // Animation button when quick touch button
   doAnimationQuickTouch = () => {
     if (!this.isLiked) {
 
@@ -270,6 +272,8 @@ export default class AnimationScreen extends Component {
     }
   }
 
+  // ------------------------------------------------------------------------------
+  // Animation when button long touch button
   doAnimationLongTouch = () => {
 
     this.isLongTouch = true
@@ -520,6 +524,8 @@ export default class AnimationScreen extends Component {
     this.setState({})
   }
 
+  // ------------------------------------------------------------------------------
+  // Animation for zoom icons when drag
   handleWhenDragBetweenIcon = (currentIcon) => {
     this.whichIconUserChoose = currentIcon
     this.previousIconFocus = this.currentIconFocus
@@ -536,7 +542,7 @@ export default class AnimationScreen extends Component {
     console.log('currentIconFocus ', this.currentIconFocus)
 
     this.zoomIconChosen.setValue(1)
-    this.zoomIconChosen.setValue(1)
+    this.zoomIconNotChosen.setValue(1)
     this.zoomBoxWhenDragInside.setValue(1)
 
     Animated.parallel([
