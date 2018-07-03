@@ -640,6 +640,9 @@ export default class AnimationScreen extends Component {
             {/* Group icon */}
             {this.renderGroupIcon()}
 
+            {/*Group icon for jump*/}
+            {this.renderGroupJumpIcon()}
+
             {/* Button */}
             <View style={styles.viewBtn} onTouchStart={this.onTouchStart} onTouchEnd={this.onTouchEnd}>
               <Animated.Image source={this.isLiked ? images.like_static_fill : images.like_static}
@@ -679,10 +682,7 @@ export default class AnimationScreen extends Component {
           }],
         }}>
           <FastImage
-            style={{
-              width: 40,
-              height: 40
-            }}
+            style={styles.imgIcon}
             source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/like.gif'}}/>
         </Animated.View>
 
@@ -699,10 +699,7 @@ export default class AnimationScreen extends Component {
           }]
         }}>
           <FastImage
-            style={{
-              width: 40,
-              height: 40
-            }}
+            style={styles.imgIcon}
             source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/love.gif'}}/>
         </Animated.View>
 
@@ -719,10 +716,7 @@ export default class AnimationScreen extends Component {
           }]
         }}>
           <FastImage
-            style={{
-              width: 40,
-              height: 40
-            }}
+            style={styles.imgIcon}
             source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/haha.gif'}}/>
         </Animated.View>
 
@@ -739,10 +733,7 @@ export default class AnimationScreen extends Component {
           }]
         }}>
           <FastImage
-            style={{
-              width: 40,
-              height: 40
-            }}
+            style={styles.imgIcon}
             source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/wow.gif'}}/>
         </Animated.View>
 
@@ -759,10 +750,7 @@ export default class AnimationScreen extends Component {
           }]
         }}>
           <FastImage
-            style={{
-              width: 40,
-              height: 40
-            }}
+            style={styles.imgIcon}
             source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/sad.gif'}}/>
         </Animated.View>
 
@@ -779,14 +767,23 @@ export default class AnimationScreen extends Component {
           }]
         }}>
           <FastImage
-            style={{
-              width: 40,
-              height: 40
-            }}
+            style={styles.imgIcon}
             source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/angry.gif'}}/>
         </Animated.View>
 
       </Animated.View>
+    )
+  }
+
+  renderGroupJumpIcon () {
+    return (
+      <View style={styles.viewWrapGroupJumpIcon}>
+        <Animated.View style={{marginLeft: 20}}>
+          <FastImage
+            style={styles.imgIcon}
+            source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/like.gif'}}/>
+        </Animated.View>
+      </View>
     )
   }
 }

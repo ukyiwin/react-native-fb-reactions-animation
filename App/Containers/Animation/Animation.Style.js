@@ -106,7 +106,19 @@ export default StyleSheet.create({
     paddingLeft: 5,
     paddingRight: 5,
   },
-  viewWrapIcon: {
+  imgIcon:{
     width: 40,
+    height: 40
+  },
+
+  // Group jump icon
+  viewWrapGroupJumpIcon: {
+    width: 330,
+    height: 140,
+    borderWidth: 1,
+    borderColor: 'green',
+    marginTop: 30,
+    marginLeft: 10,
+    position: 'absolute'
   },
 })
