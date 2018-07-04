@@ -107,17 +107,15 @@ export default class AnimationScreen extends Component {
     return true
   }
 
+  // Handle the drag gesture
   setupPanResponder () {
     this.rootPanResponder = PanResponder.create({
       onMoveShouldSetPanResponder: (evt, gestureState) => !this.isTouchBtn,
 
       onPanResponderGrant: (evt, gestureState) => {
-        // console.log('on grant')
       },
 
       onPanResponderMove: (evt, gestureState) => {
-        // console.log('on move', gestureState)
-
         // return if the drag is drag without touch button
         if (!this.isLongTouch) return
 
@@ -134,39 +132,31 @@ export default class AnimationScreen extends Component {
           }
 
           if (gestureState.x0 + gestureState.dx >= 35 && gestureState.x0 + gestureState.dx < 88.33) {
-            console.log('like')
             if (this.currentIconFocus !== 1) {
               this.handleWhenDragBetweenIcon(1)
             }
           } else if (gestureState.x0 + gestureState.dx >= 88.33 && gestureState.x0 + gestureState.dx < 141.66) {
-            console.log('love')
             if (this.currentIconFocus !== 2) {
               this.handleWhenDragBetweenIcon(2)
             }
           } else if (gestureState.x0 + gestureState.dx >= 141.66 && gestureState.x0 + gestureState.dx < 194.99) {
-            console.log('haha')
             if (this.currentIconFocus !== 3) {
               this.handleWhenDragBetweenIcon(3)
             }
           } else if (gestureState.x0 + gestureState.dx >= 194.99 && gestureState.x0 + gestureState.dx < 248.32) {
-            console.log('wow')
             if (this.currentIconFocus !== 4) {
               this.handleWhenDragBetweenIcon(4)
             }
           } else if (gestureState.x0 + gestureState.dx >= 248.32 && gestureState.x0 + gestureState.dx < 301.65) {
-            console.log('sad')
             if (this.currentIconFocus !== 5) {
               this.handleWhenDragBetweenIcon(5)
             }
           } else if (gestureState.x0 + gestureState.dx >= 301.65 && gestureState.x0 + gestureState.dx <= 354.98) {
-            console.log('angry')
             if (this.currentIconFocus !== 6) {
               this.handleWhenDragBetweenIcon(6)
             }
           }
         } else {
-          // console.log('outside')
-
           this.whichIconUserChoose = 0
           this.previousIconFocus = 0
           this.currentIconFocus = 0
@@ -184,8 +174,6 @@ export default class AnimationScreen extends Component {
       },
 
       onPanResponderRelease: (evt, gestureState) => {
-        // console.log('on release')
-
         this.isDragging = false
         this.isDraggingOutside = false
         this.isJustDragInside = true
@@ -198,8 +186,8 @@ export default class AnimationScreen extends Component {
     })
   }
 
+  // Handle the touch of button
   onTouchStart = () => {
-    // console.log('touch start')
     this.isTouchBtn = true
     this.setState({})
 
@@ -207,7 +195,6 @@ export default class AnimationScreen extends Component {
   }
 
   onTouchEnd = () => {
-    // console.log('touch end')
     this.isTouchBtn = false
     this.setState({})
 
