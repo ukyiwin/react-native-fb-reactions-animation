@@ -212,6 +212,12 @@ export default class AnimationScreen extends Component {
     this.setState({})
 
     if (!this.isLongTouch) {
+      if (this.whichIconUserChoose !== 0) {
+        this.whichIconUserChoose = 0
+
+        // assuming that another icon is the same like, so we can animate the reverse then
+        this.isLiked = true
+      }
       clearTimeout(this.timerMeasureLongTouch)
       this.doAnimationQuickTouch()
     }
@@ -640,24 +646,6 @@ export default class AnimationScreen extends Component {
   }
 
   render () {
-    let tiltBounceIconAnim = this.tiltIconAnim.interpolate({
-      inputRange: [0, 0.2, 0.8, 1],
-      outputRange: ['0deg', '20deg', '-15deg', '0deg']
-    })
-    let zoomBounceIconAnim = this.zoomIconAnim.interpolate({
-      inputRange: [0, 0.2, 0.8, 1],
-      outputRange: [1, 0.8, 1.15, 1]
-    })
-    let zoomBounceTextAnim = this.zoomIconAnim.interpolate({
-      inputRange: [0, 0.2, 0.8, 1],
-      outputRange: [1, 0.8, 1.15, 1]
-    })
-
-    let tiltBounceIconAnim2 = this.tiltIconAnim2.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['0deg', '20deg']
-    })
-
     return (
       <View style={styles.viewContainer}>
         {/* Toolbar */}
@@ -694,25 +682,97 @@ export default class AnimationScreen extends Component {
             {this.renderGroupJumpIcon()}
 
             {/* Button */}
-            <View style={styles.viewBtn} onTouchStart={this.onTouchStart} onTouchEnd={this.onTouchEnd}>
-              <Animated.Image source={this.isLiked ? images.like_static_fill : images.like_static}
-                              style={[styles.imgLikeInBtn,
-                                {
-                                  transform: [
-                                    {rotate: this.isLongTouch ? tiltBounceIconAnim2 : tiltBounceIconAnim},
-                                    {scale: this.isLongTouch ? this.zoomIconAnim2 : zoomBounceIconAnim}]
-                                }]}/>
-              <Animated.Text
-                style={[styles.textBtn, {color: this.isLiked ? '#3b5998' : 'grey'},
-                  {transform: [{scale: this.isLongTouch ? this.zoomTextAnim2 : zoomBounceTextAnim}]}]}>
-                Like
-              </Animated.Text>
-            </View>
+            {this.renderButton()}
+
           </View>
 
         </View>
       </View>
     )
+  }
+
+  renderButton () {
+    let tiltBounceIconAnim = this.tiltIconAnim.interpolate({
+      inputRange: [0, 0.2, 0.8, 1],
+      outputRange: ['0deg', '20deg', '-15deg', '0deg']
+    })
+    let zoomBounceIconAnim = this.zoomIconAnim.interpolate({
+      inputRange: [0, 0.2, 0.8, 1],
+      outputRange: [1, 0.8, 1.15, 1]
+    })
+    let zoomBounceTextAnim = this.zoomIconAnim.interpolate({
+      inputRange: [0, 0.2, 0.8, 1],
+      outputRange: [1, 0.8, 1.15, 1]
+    })
+
+    let tiltBounceIconAnim2 = this.tiltIconAnim2.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0deg', '20deg']
+    })
+
+    return (
+      <View style={styles.viewBtn} onTouchStart={this.onTouchStart} onTouchEnd={this.onTouchEnd}>
+        <Animated.Image source={this.getIconBtn()}
+                        style={[styles.imgLikeInBtn,
+                          {
+                            transform: [
+                              {rotate: this.isLongTouch ? tiltBounceIconAnim2 : tiltBounceIconAnim},
+                              {scale: this.isLongTouch ? this.zoomIconAnim2 : zoomBounceIconAnim}]
+                          }]}/>
+        <Animated.Text
+          style={[styles.textBtn, {color: this.isLiked ? '#3b5998' : 'grey'},
+            {transform: [{scale: this.isLongTouch ? this.zoomTextAnim2 : zoomBounceTextAnim}]}]}>
+          {this.getTextBtn()}
+        </Animated.Text>
+      </View>
+    )
+  }
+
+  getIconBtn () {
+    if (!this.isLongTouch && this.isLiked) {
+      return images.like_static_fill
+    } else if (!this.isDragging) {
+      switch (this.whichIconUserChoose) {
+        case 1:
+          return images.like_static_fill
+        case 2:
+          return images.love_static
+        case 3:
+          return images.haha_static
+        case 4:
+          return images.wow_static
+        case 5:
+          return images.sad_static
+        case 6:
+          return images.angry_static
+        default:
+          return images.like_static
+      }
+    } else {
+      return images.like_static
+    }
+  }
+
+  getTextBtn () {
+    if (this.isDragging) {
+      return 'Like'
+    }
+    switch (this.whichIconUserChoose) {
+      case 1:
+        return 'Like'
+      case 2:
+        return 'Love'
+      case 3:
+        return 'Haha'
+      case 4:
+        return 'Wow'
+      case 5:
+        return 'Sad'
+      case 6:
+        return 'Angry'
+      default:
+        return 'Like'
+    }
   }
 
   renderGroupIcon () {
