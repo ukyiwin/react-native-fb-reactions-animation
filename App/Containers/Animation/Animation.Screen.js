@@ -34,6 +34,7 @@ export default class AnimationScreen extends Component {
     this.durationAnimationQuickTouch = 500
     this.durationAnimationLongTouch = 150
     this.durationAnimationIconWhenDrag = 150
+    this.durationAnimationIconWhenRelease = 1000
 
     // ------------------------------------------------------------------------------
     // Animation button when quick touch button
@@ -80,15 +81,15 @@ export default class AnimationScreen extends Component {
     this.zoomBoxWhenDragOutside = new Animated.Value(0.95)
 
     // ------------------------------------------------------------------------------
-    // For jump icon when release
+    // Animation for jump icon when release finger
     this.zoomIconWhenRelease = new Animated.Value(1)
-    this.moveUpIconWhenRelease = new Animated.Value(1)
-    this.moveLeftIconLikeWhenRelease = new Animated.Value(1)
-    this.moveLeftIconLoveWhenRelease = new Animated.Value(1)
-    this.moveLeftIconHahaWhenRelease = new Animated.Value(1)
-    this.moveLeftIconWowWhenRelease = new Animated.Value(1)
-    this.moveLeftIconSadWhenRelease = new Animated.Value(1)
-    this.moveLeftIconAngryWhenRelease = new Animated.Value(1)
+    this.moveUpDownIconWhenRelease = new Animated.Value(0)
+    this.moveLeftIconLikeWhenRelease = new Animated.Value(20)
+    this.moveLeftIconLoveWhenRelease = new Animated.Value(72)
+    this.moveLeftIconHahaWhenRelease = new Animated.Value(124)
+    this.moveLeftIconWowWhenRelease = new Animated.Value(173)
+    this.moveLeftIconSadWhenRelease = new Animated.Value(226)
+    this.moveLeftIconAngryWhenRelease = new Animated.Value(278)
   }
 
   componentWillMount () {
@@ -218,6 +219,7 @@ export default class AnimationScreen extends Component {
 
   onDragRelease = () => {
     this.doAnimationLongTouchReverse()
+    this.controlIconWhenRelease()
   }
 
   // ------------------------------------------------------------------------------
@@ -589,6 +591,54 @@ export default class AnimationScreen extends Component {
     }).start()
   }
 
+  // ------------------------------------------------------------------------------
+  // Animation for jump icon when release finger
+  controlIconWhenRelease = () => {
+    this.zoomIconWhenRelease.setValue(1)
+    this.moveUpDownIconWhenRelease.setValue(0)
+    this.moveLeftIconLikeWhenRelease.setValue(20)
+    this.moveLeftIconLoveWhenRelease.setValue(72)
+    this.moveLeftIconHahaWhenRelease.setValue(154)
+    this.moveLeftIconWowWhenRelease.setValue(173)
+    this.moveLeftIconSadWhenRelease.setValue(226)
+    this.moveLeftIconAngryWhenRelease.setValue(278)
+
+    Animated.parallel([
+      Animated.timing(this.zoomIconWhenRelease, {
+        toValue: 0,
+        duration: this.durationAnimationIconWhenRelease * this.timeDilation,
+      }),
+      Animated.timing(this.moveUpDownIconWhenRelease, {
+        toValue: 1,
+        duration: this.durationAnimationIconWhenRelease * this.timeDilation,
+      }),
+      Animated.timing(this.moveLeftIconLikeWhenRelease, {
+        toValue: 0,
+        duration: this.durationAnimationIconWhenRelease * this.timeDilation,
+      }),
+      Animated.timing(this.moveLeftIconLoveWhenRelease, {
+        toValue: 0,
+        duration: this.durationAnimationIconWhenRelease * this.timeDilation,
+      }),
+      Animated.timing(this.moveLeftIconHahaWhenRelease, {
+        toValue: 0,
+        duration: this.durationAnimationIconWhenRelease * this.timeDilation,
+      }),
+      Animated.timing(this.moveLeftIconWowWhenRelease, {
+        toValue: 0,
+        duration: this.durationAnimationIconWhenRelease * this.timeDilation,
+      }),
+      Animated.timing(this.moveLeftIconSadWhenRelease, {
+        toValue: 0,
+        duration: this.durationAnimationIconWhenRelease * this.timeDilation,
+      }),
+      Animated.timing(this.moveLeftIconAngryWhenRelease, {
+        toValue: 0,
+        duration: this.durationAnimationIconWhenRelease * this.timeDilation,
+      }),
+    ]).start()
+  }
+
   render () {
     let tiltBounceIconAnim = this.tiltIconAnim.interpolate({
       inputRange: [0, 0.2, 0.8, 1],
@@ -776,13 +826,127 @@ export default class AnimationScreen extends Component {
   }
 
   renderGroupJumpIcon () {
+    let moveUpDownIcon = this.moveUpDownIconWhenRelease.interpolate({
+      inputRange: [0, 0.4, 1],
+      outputRange: [40, 100, 0]
+    })
+
     return (
       <View style={styles.viewWrapGroupJumpIcon}>
-        <Animated.View style={{marginLeft: 20}}>
-          <FastImage
-            style={styles.imgIcon}
-            source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/like.gif'}}/>
-        </Animated.View>
+        {/*Icon like*/}
+        {
+          this.whichIconUserChoose === 1 && !this.isDragging ?
+            <Animated.View
+              style={{
+                width: 40,
+                height: 40,
+                left: this.moveLeftIconLikeWhenRelease,
+                bottom: moveUpDownIcon,
+                transform: [{scale: this.zoomIconWhenRelease}],
+                position: 'absolute'
+              }}>
+              <FastImage
+                style={styles.imgIcon}
+                source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/like.gif'}}/>
+            </Animated.View> :
+            null
+        }
+
+        {/*Icon love*/}
+        {
+          this.whichIconUserChoose === 2 && !this.isDragging ?
+            <Animated.View
+              style={{
+                width: 40,
+                height: 40,
+                left: this.moveLeftIconLoveWhenRelease,
+                bottom: moveUpDownIcon,
+                transform: [{scale: this.zoomIconWhenRelease}],
+                position: 'absolute',
+              }}>
+              <FastImage
+                style={styles.imgIcon}
+                source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/love.gif'}}/>
+            </Animated.View> :
+            null
+        }
+
+        {/*Icon haha*/}
+        {
+          this.whichIconUserChoose === 3 && !this.isDragging ?
+            <Animated.View
+              style={{
+                width: 40,
+                height: 40,
+                left: this.moveLeftIconHahaWhenRelease,
+                bottom: moveUpDownIcon,
+                transform: [{scale: this.zoomIconWhenRelease}],
+                position: 'absolute',
+              }}>
+              <FastImage
+                style={styles.imgIcon}
+                source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/haha.gif'}}/>
+            </Animated.View> :
+            null
+        }
+
+        {/*Icon wow*/}
+        {
+          this.whichIconUserChoose === 4 && !this.isDragging ?
+            <Animated.View
+              style={{
+                width: 40,
+                height: 40,
+                left: this.moveLeftIconWowWhenRelease,
+                bottom: moveUpDownIcon,
+                transform: [{scale: this.zoomIconWhenRelease}],
+                position: 'absolute',
+              }}>
+              <FastImage
+                style={styles.imgIcon}
+                source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/wow.gif'}}/>
+            </Animated.View> :
+            null
+        }
+
+        {/*Icon sad*/}
+        {
+          this.whichIconUserChoose === 5 && !this.isDragging ?
+            <Animated.View
+              style={{
+                width: 40,
+                height: 40,
+                left: this.moveLeftIconSadWhenRelease,
+                bottom: moveUpDownIcon,
+                transform: [{scale: this.zoomIconWhenRelease}],
+                position: 'absolute',
+              }}>
+              <FastImage
+                style={styles.imgIcon}
+                source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/sad.gif'}}/>
+            </Animated.View> :
+            null
+        }
+
+        {/*Icon angry*/}
+        {
+          this.whichIconUserChoose === 6 && !this.isDragging ?
+            <Animated.View
+              style={{
+                width: 40,
+                height: 40,
+                left: this.moveLeftIconAngryWhenRelease,
+                bottom: moveUpDownIcon,
+                transform: [{scale: this.zoomIconWhenRelease}],
+                position: 'absolute',
+              }}>
+              <FastImage
+                style={styles.imgIcon}
+                source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/angry.gif'}}/>
+            </Animated.View> :
+            null
+        }
+
       </View>
     )
   }
