@@ -34,7 +34,7 @@ export default class AnimationScreen extends Component {
     this.durationAnimationQuickTouch = 500
     this.durationAnimationLongTouch = 150
     this.durationAnimationIconWhenDrag = 150
-    this.durationAnimationIconWhenRelease = 1000
+    this.durationAnimationIconWhenRelease = 1500
 
     // ------------------------------------------------------------------------------
     // Animation button when quick touch button
@@ -50,7 +50,7 @@ export default class AnimationScreen extends Component {
     // Animation of the box
     this.fadeBoxAnim = new Animated.Value(0)
 
-    // Animation for icons
+    // Animation for emoticons
     this.moveRightGroupIcon = new Animated.Value(10)
     // Like
     this.pushIconLikeUp = new Animated.Value(0)
@@ -72,7 +72,7 @@ export default class AnimationScreen extends Component {
     this.zoomIconAngry = new Animated.Value(0.01)
 
     // ------------------------------------------------------------------------------
-    // Animation for zoom icons when drag
+    // Animation for zoom emoticons when drag
     this.zoomIconChosen = new Animated.Value(1)
     this.zoomIconNotChosen = new Animated.Value(1)
     this.zoomIconWhenDragOutside = new Animated.Value(1)
@@ -81,7 +81,7 @@ export default class AnimationScreen extends Component {
     this.zoomBoxWhenDragOutside = new Animated.Value(0.95)
 
     // ------------------------------------------------------------------------------
-    // Animation for jump icon when release finger
+    // Animation for jump emoticon when release finger
     this.zoomIconWhenRelease = new Animated.Value(1)
     this.moveUpDownIconWhenRelease = new Animated.Value(0)
     this.moveLeftIconLikeWhenRelease = new Animated.Value(20)
@@ -113,64 +113,11 @@ export default class AnimationScreen extends Component {
       onMoveShouldSetPanResponder: (evt, gestureState) => !this.isTouchBtn,
 
       onPanResponderGrant: (evt, gestureState) => {
+        this.handleEmoticonWhenDragging(evt, gestureState)
       },
 
       onPanResponderMove: (evt, gestureState) => {
-        // return if the drag is drag without touch button
-        if (!this.isLongTouch) return
-
-        // the margin top the box is 100
-        // and plus the height of toolbar and the status bar
-        // so the range we check is about 150 -> 450
-        if (gestureState.y0 + gestureState.dy >= 150 && gestureState.y0 + gestureState.dy <= 450) {
-
-          this.isDragging = true
-          this.isDraggingOutside = false
-
-          if (this.isJustDragInside) {
-            this.controlIconWhenDragInside()
-          }
-
-          if (gestureState.x0 + gestureState.dx >= 35 && gestureState.x0 + gestureState.dx < 88.33) {
-            if (this.currentIconFocus !== 1) {
-              this.handleWhenDragBetweenIcon(1)
-            }
-          } else if (gestureState.x0 + gestureState.dx >= 88.33 && gestureState.x0 + gestureState.dx < 141.66) {
-            if (this.currentIconFocus !== 2) {
-              this.handleWhenDragBetweenIcon(2)
-            }
-          } else if (gestureState.x0 + gestureState.dx >= 141.66 && gestureState.x0 + gestureState.dx < 194.99) {
-            if (this.currentIconFocus !== 3) {
-              this.handleWhenDragBetweenIcon(3)
-            }
-          } else if (gestureState.x0 + gestureState.dx >= 194.99 && gestureState.x0 + gestureState.dx < 248.32) {
-            if (this.currentIconFocus !== 4) {
-              this.handleWhenDragBetweenIcon(4)
-            }
-          } else if (gestureState.x0 + gestureState.dx >= 248.32 && gestureState.x0 + gestureState.dx < 301.65) {
-            if (this.currentIconFocus !== 5) {
-              this.handleWhenDragBetweenIcon(5)
-            }
-          } else if (gestureState.x0 + gestureState.dx >= 301.65 && gestureState.x0 + gestureState.dx <= 354.98) {
-            if (this.currentIconFocus !== 6) {
-              this.handleWhenDragBetweenIcon(6)
-            }
-          }
-        } else {
-          this.whichIconUserChoose = 0
-          this.previousIconFocus = 0
-          this.currentIconFocus = 0
-          this.isJustDragInside = true
-
-          if (this.isDragging && !this.isDraggingOutside) {
-            this.isDragging = false
-            this.isDraggingOutside = true
-            this.setState({})
-
-            this.controlBoxWhenDragOutside()
-            this.controlIconWhenDragOutside()
-          }
-        }
+        this.handleEmoticonWhenDragging(evt, gestureState)
       },
 
       onPanResponderRelease: (evt, gestureState) => {
@@ -184,6 +131,64 @@ export default class AnimationScreen extends Component {
         this.onDragRelease()
       }
     })
+  }
+
+  handleEmoticonWhenDragging = (evt, gestureState) => {
+    // return if the user's dragging is drag without touch the button
+    if (!this.isLongTouch) return
+
+    // the margin top the box is 100
+    // and plus the height of toolbar and the status bar
+    // so the range we check is about 150 -> 450
+    if (gestureState.y0 + gestureState.dy >= 150 && gestureState.y0 + gestureState.dy <= 450) {
+
+      this.isDragging = true
+      this.isDraggingOutside = false
+
+      if (this.isJustDragInside) {
+        this.controlIconWhenDragInside()
+      }
+
+      if (gestureState.x0 + gestureState.dx >= 35 && gestureState.x0 + gestureState.dx < 88.33) {
+        if (this.currentIconFocus !== 1) {
+          this.handleWhenDragBetweenIcon(1)
+        }
+      } else if (gestureState.x0 + gestureState.dx >= 88.33 && gestureState.x0 + gestureState.dx < 141.66) {
+        if (this.currentIconFocus !== 2) {
+          this.handleWhenDragBetweenIcon(2)
+        }
+      } else if (gestureState.x0 + gestureState.dx >= 141.66 && gestureState.x0 + gestureState.dx < 194.99) {
+        if (this.currentIconFocus !== 3) {
+          this.handleWhenDragBetweenIcon(3)
+        }
+      } else if (gestureState.x0 + gestureState.dx >= 194.99 && gestureState.x0 + gestureState.dx < 248.32) {
+        if (this.currentIconFocus !== 4) {
+          this.handleWhenDragBetweenIcon(4)
+        }
+      } else if (gestureState.x0 + gestureState.dx >= 248.32 && gestureState.x0 + gestureState.dx < 301.65) {
+        if (this.currentIconFocus !== 5) {
+          this.handleWhenDragBetweenIcon(5)
+        }
+      } else if (gestureState.x0 + gestureState.dx >= 301.65 && gestureState.x0 + gestureState.dx <= 354.98) {
+        if (this.currentIconFocus !== 6) {
+          this.handleWhenDragBetweenIcon(6)
+        }
+      }
+    } else {
+      this.whichIconUserChoose = 0
+      this.previousIconFocus = 0
+      this.currentIconFocus = 0
+      this.isJustDragInside = true
+
+      if (this.isDragging && !this.isDraggingOutside) {
+        this.isDragging = false
+        this.isDraggingOutside = true
+        this.setState({})
+
+        this.controlBoxWhenDragOutside()
+        this.controlIconWhenDragOutside()
+      }
+    }
   }
 
   // Handle the touch of button
@@ -202,7 +207,7 @@ export default class AnimationScreen extends Component {
       if (this.whichIconUserChoose !== 0) {
         this.whichIconUserChoose = 0
 
-        // assuming that another icon is the same like, so we can animate the reverse then
+        // assuming that another emoticon is the same like, so we can animate the reverse then
         this.isLiked = true
       }
       clearTimeout(this.timerMeasureLongTouch)
@@ -211,7 +216,10 @@ export default class AnimationScreen extends Component {
   }
 
   onDragRelease = () => {
+    // To lower the emoticons
     this.doAnimationLongTouchReverse()
+
+    // To jump particular emoticon be chosen
     this.controlIconWhenRelease()
   }
 
@@ -265,7 +273,7 @@ export default class AnimationScreen extends Component {
   }
 
   // ------------------------------------------------------------------------------
-  // Animation when button long touch button
+  // Animation when long touch button
   doAnimationLongTouch = () => {
 
     this.isLongTouch = true
@@ -319,7 +327,7 @@ export default class AnimationScreen extends Component {
         delay: 350
       }),
 
-      // Group icon
+      // Group emoticon
       Animated.timing(this.moveRightGroupIcon, {
         toValue: 20,
         duration: this.durationAnimationBox * this.timeDilation
@@ -439,7 +447,7 @@ export default class AnimationScreen extends Component {
         duration: this.durationAnimationLongTouch * this.timeDilation
       }),
 
-      // Group icon
+      // Group emoticon
       Animated.timing(this.moveRightGroupIcon, {
         toValue: 10,
         duration: this.durationAnimationBox * this.timeDilation
@@ -517,7 +525,7 @@ export default class AnimationScreen extends Component {
   }
 
   // ------------------------------------------------------------------------------
-  // Animation for zoom icons when drag
+  // Animation for zoom emoticons when drag
   handleWhenDragBetweenIcon = (currentIcon) => {
     this.whichIconUserChoose = currentIcon
     this.previousIconFocus = this.currentIconFocus
@@ -585,7 +593,7 @@ export default class AnimationScreen extends Component {
   }
 
   // ------------------------------------------------------------------------------
-  // Animation for jump icon when release finger
+  // Animation for jump emoticon when release finger
   controlIconWhenRelease = () => {
     this.zoomIconWhenRelease.setValue(1)
     this.moveUpDownIconWhenRelease.setValue(0)
@@ -662,10 +670,10 @@ export default class AnimationScreen extends Component {
               }]
             }]}/>
 
-            {/* Group icon */}
+            {/* Group emoticon */}
             {this.renderGroupIcon()}
 
-            {/*Group icon for jump*/}
+            {/*Group emoticon for jump*/}
             {this.renderGroupJumpIcon()}
 
             {/* Button */}
