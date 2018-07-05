@@ -18,7 +18,7 @@ export default class AnimationScreen extends Component {
     this.soundShortTouchLike = new Sound('short_press_like.mp3', Sound.MAIN_BUNDLE, (error) => { })
 
     // Slow down speed animation here (1 = default)
-    this.timeDilation = 1
+    this.timeDilation = this.props.navigation.state.params.speed
 
     // If duration touch longer than it, mean long touch
     this.durationLongPress = 250
@@ -61,6 +61,8 @@ export default class AnimationScreen extends Component {
     this.moveRightGroupIcon = new Animated.Value(10)
     // Like
     this.pushIconLikeUp = new Animated.Value(0)
+    // I don't know why, but when I set to 0.0, it seem blink,
+    // so temp solution is set to 0.01
     this.zoomIconLike = new Animated.Value(0.01)
     // Love
     this.pushIconLoveUp = new Animated.Value(0)
@@ -604,7 +606,7 @@ export default class AnimationScreen extends Component {
   }
 
   // ------------------------------------------------------------------------------
-  // Animation for jump emoticon when release finger
+  // Animation for jump emoticon when release finger0.01
   controlIconWhenRelease = () => {
     this.zoomIconWhenRelease.setValue(1)
     this.moveUpDownIconWhenRelease.setValue(0)

@@ -1,6 +1,9 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
+  viewContainer: {
+    flex: 1
+  },
   toolbar: {
     width: '100%',
     height: 48,
@@ -13,6 +16,8 @@ export default StyleSheet.create({
     fontSize: 18,
     alignSelf: 'center'
   },
+
+  // Button
   button: {
     borderRadius: 5,
     margin: 20,
@@ -25,7 +30,24 @@ export default StyleSheet.create({
     alignSelf: 'center',
     margin: 10
   },
-  viewContainer: {
-    flex: 1
+
+  // Set speed
+  viewWrapSetSpeed: {
+    flexDirection: 'row',
+    margin: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  textSpeed: {
+    color: 'black',
+    fontWeight: 'bold'
+  },
+  viewBtnSetSpeed: {
+    margin: 5,
+    padding: 10,
+    borderRadius: 20
+  },
+  textBtnSpeed: {
+    color: 'white'
   }
 })
