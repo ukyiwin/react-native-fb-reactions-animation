@@ -109,6 +109,22 @@ export default StyleSheet.create({
     width: 36,
     height: 36
   },
+  viewWrapTextDescription: {
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    paddingLeft: 7,
+    paddingRight: 7,
+    paddingTop: 2,
+    paddingBottom: 2,
+    bottom: 30,
+    position: 'absolute'
+  },
+  textDescription: {
+    color: 'white',
+    fontSize: 8,
+  },
 
   // Group jump icon
   viewWrapGroupJumpIcon: {

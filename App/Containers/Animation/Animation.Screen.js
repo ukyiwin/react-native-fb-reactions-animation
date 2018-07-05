@@ -852,6 +852,14 @@ export default class AnimationScreen extends Component {
               this.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconLike
           }],
         }}>
+          {
+            this.currentIconFocus === 1 ?
+              <View style={styles.viewWrapTextDescription}>
+                <Text style={styles.textDescription}>Like</Text>
+              </View> :
+              null
+          }
+
           <FastImage
             style={styles.imgIcon}
             source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/like.gif'}}/>
