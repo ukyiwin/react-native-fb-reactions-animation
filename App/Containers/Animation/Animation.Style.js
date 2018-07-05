@@ -48,7 +48,7 @@ export default StyleSheet.create({
 
   // Main content
   viewContent: {
-    borderWidth: 1,
+    // borderWidth: 1,
     borderColor: 'red',
     flexDirection: 'column',
     height: 320,
@@ -98,7 +98,7 @@ export default StyleSheet.create({
     height: 120,
     marginTop: 50,
     position: 'absolute',
-    borderWidth: 1,
+    // borderWidth: 1,
     borderColor: 'blue',
     alignItems: 'flex-end',
     justifyContent: 'space-around',
@@ -134,7 +134,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     width: 330,
     height: 140,
-    borderWidth: 1,
+    // borderWidth: 1,
     borderColor: 'green',
     marginTop: 30,
     marginLeft: 10,
