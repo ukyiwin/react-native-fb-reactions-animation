@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Animated, BackHandler, Image, PanResponder, Text, TouchableOpacity, View } from 'react-native'
+import Sound from 'react-native-sound'
 
 import styles from './Animation.Style'
 import images from '../../Themes/Images'
@@ -9,6 +10,12 @@ export default class AnimationScreen extends Component {
   constructor (props) {
     super(props)
     this.backPress = this.handleBackPress.bind(this)
+
+    this.soundBoxDown = new Sound('box_down.mp3', Sound.MAIN_BUNDLE, (error) => { })
+    this.soundBoxUp = new Sound('box_up.mp3', Sound.MAIN_BUNDLE, (error) => { })
+    this.soundIconChoose = new Sound('icon_choose.mp3', Sound.MAIN_BUNDLE, (error) => { })
+    this.soundIconFocus = new Sound('icon_focus.mp3', Sound.MAIN_BUNDLE, (error) => { })
+    this.soundShortTouchLike = new Sound('short_press_like.mp3', Sound.MAIN_BUNDLE, (error) => { })
 
     // Slow down speed animation here (1 = default)
     this.timeDilation = 1
@@ -227,6 +234,7 @@ export default class AnimationScreen extends Component {
   // Animation button when quick touch button
   doAnimationQuickTouch = () => {
     if (!this.isLiked) {
+      this.soundShortTouchLike.play()
 
       this.isLiked = true
       this.setState({})
@@ -275,6 +283,7 @@ export default class AnimationScreen extends Component {
   // ------------------------------------------------------------------------------
   // Animation when long touch button
   doAnimationLongTouch = () => {
+    this.soundBoxUp.play()
 
     this.isLongTouch = true
     this.setState({})
@@ -531,6 +540,8 @@ export default class AnimationScreen extends Component {
     this.previousIconFocus = this.currentIconFocus
     this.currentIconFocus = currentIcon
 
+    this.soundIconFocus.play()
+
     this.controlIconWhenDrag()
   }
 
@@ -638,6 +649,12 @@ export default class AnimationScreen extends Component {
         duration: this.durationAnimationIconWhenRelease * this.timeDilation,
       }),
     ]).start()
+
+    if (this.whichIconUserChoose === 0) {
+      this.soundBoxDown.play()
+    } else {
+      this.soundIconChoose.play()
+    }
   }
 
   render () {

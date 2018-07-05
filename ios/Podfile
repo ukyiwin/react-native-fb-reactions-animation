@@ -5,6 +5,8 @@ target 'FacebookReactionsAnimation' do
 
   pod 'react-native-fast-image', :path => '../node_modules/react-native-fast-image'
 
+  pod 'RNSound', :path => '../node_modules/react-native-sound'
+
 end
 
 post_install do |installer|
