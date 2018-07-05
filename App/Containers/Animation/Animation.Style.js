@@ -106,8 +106,8 @@ export default StyleSheet.create({
     paddingRight: 5,
   },
   imgIcon: {
-    width: 40,
-    height: 40
+    width: 36,
+    height: 36
   },
 
   // Group jump icon
