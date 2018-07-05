@@ -89,6 +89,10 @@ export default class AnimationScreen extends Component {
     this.zoomBoxWhenDragInside = new Animated.Value(1)
     this.zoomBoxWhenDragOutside = new Animated.Value(0.95)
 
+    // Animation for text description at top icon
+    this.pushTextDescriptionUp = new Animated.Value(60)
+    this.zoomTextDescription = new Animated.Value(1)
+
     // ------------------------------------------------------------------------------
     // Animation for jump emoticon when release finger
     this.zoomIconWhenRelease = new Animated.Value(1)
@@ -552,6 +556,9 @@ export default class AnimationScreen extends Component {
     this.zoomIconNotChosen.setValue(1.8)
     this.zoomBoxWhenDragInside.setValue(1.0)
 
+    this.pushTextDescriptionUp.setValue(60)
+    this.zoomTextDescription.setValue(1.0)
+
     // For update logic at render function
     this.setState({})
 
@@ -568,7 +575,17 @@ export default class AnimationScreen extends Component {
       Animated.timing(this.zoomBoxWhenDragInside, {
         toValue: 0.95,
         duration: this.durationAnimationIconWhenDrag * this.timeDilation
-      })
+      }),
+
+      Animated.timing(this.pushTextDescriptionUp, {
+        toValue: 90,
+        duration: this.durationAnimationIconWhenDrag * this.timeDilation
+      }),
+      Animated.timing(this.zoomTextDescription, {
+        toValue: 1.7,
+        duration: this.durationAnimationIconWhenDrag * this.timeDilation
+      }),
+
     ]).start(), 50)
   }
 
@@ -841,114 +858,178 @@ export default class AnimationScreen extends Component {
       <Animated.View style={[styles.viewWrapGroupIcon, {marginLeft: this.moveRightGroupIcon}]}>
 
         {/* Icon like */}
-        <Animated.View style={{
-          marginBottom: this.pushIconLikeUp, transform: [{
-            scale: this.isDragging ?
-              (this.currentIconFocus === 1 ?
-                this.zoomIconChosen :
-                (this.previousIconFocus === 1 ?
-                  this.zoomIconNotChosen :
-                  this.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
-              this.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconLike
-          }],
-        }}>
+        <View style={styles.viewWrapIcon}>
           {
             this.currentIconFocus === 1 ?
-              <View style={styles.viewWrapTextDescription}>
+              <Animated.View style={[styles.viewWrapTextDescription, {
+                bottom: this.pushTextDescriptionUp,
+                transform: [{scale: this.zoomTextDescription}]
+              }]}>
                 <Text style={styles.textDescription}>Like</Text>
-              </View> :
+              </Animated.View> :
               null
           }
-
-          <FastImage
-            style={styles.imgIcon}
-            source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/like.gif'}}/>
-        </Animated.View>
+          <Animated.View style={{
+            marginBottom: this.pushIconLikeUp, transform: [{
+              scale: this.isDragging ?
+                (this.currentIconFocus === 1 ?
+                  this.zoomIconChosen :
+                  (this.previousIconFocus === 1 ?
+                    this.zoomIconNotChosen :
+                    this.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
+                this.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconLike
+            }],
+          }}>
+            <FastImage
+              style={styles.imgIcon}
+              source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/like.gif'}}/>
+          </Animated.View>
+        </View>
 
         {/* Icon love */}
-        <Animated.View style={{
-          marginBottom: this.pushIconLoveUp, transform: [{
-            scale: this.isDragging ?
-              (this.currentIconFocus === 2 ?
-                this.zoomIconChosen :
-                (this.previousIconFocus === 2 ?
-                  this.zoomIconNotChosen :
-                  this.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
-              this.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconLove
-          }]
-        }}>
-          <FastImage
-            style={styles.imgIcon}
-            source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/love.gif'}}/>
-        </Animated.View>
+        <View style={styles.viewWrapIcon}>
+          {
+            this.currentIconFocus === 2 ?
+              <Animated.View style={[styles.viewWrapTextDescription, {
+                bottom: this.pushTextDescriptionUp,
+                transform: [{scale: this.zoomTextDescription}]
+              }]}>
+                <Text style={styles.textDescription}>Love</Text>
+              </Animated.View> :
+              null
+          }
+          <Animated.View style={{
+            marginBottom: this.pushIconLoveUp, transform: [{
+              scale: this.isDragging ?
+                (this.currentIconFocus === 2 ?
+                  this.zoomIconChosen :
+                  (this.previousIconFocus === 2 ?
+                    this.zoomIconNotChosen :
+                    this.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
+                this.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconLove
+            }]
+          }}>
+            <FastImage
+              style={styles.imgIcon}
+              source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/love.gif'}}/>
+          </Animated.View>
+        </View>
 
         {/* Icon haha */}
-        <Animated.View style={{
-          marginBottom: this.pushIconHahaUp, transform: [{
-            scale: this.isDragging ?
-              (this.currentIconFocus === 3 ?
-                this.zoomIconChosen :
-                (this.previousIconFocus === 3 ?
-                  this.zoomIconNotChosen :
-                  this.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
-              this.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconHaha
-          }]
-        }}>
-          <FastImage
-            style={styles.imgIcon}
-            source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/haha.gif'}}/>
-        </Animated.View>
+        <View style={styles.viewWrapIcon}>
+          {
+            this.currentIconFocus === 3 ?
+              <Animated.View style={[styles.viewWrapTextDescription, {
+                bottom: this.pushTextDescriptionUp,
+                transform: [{scale: this.zoomTextDescription}]
+              }]}>
+                <Text style={styles.textDescription}>Haha</Text>
+              </Animated.View> :
+              null
+          }
+          <Animated.View style={{
+            marginBottom: this.pushIconHahaUp, transform: [{
+              scale: this.isDragging ?
+                (this.currentIconFocus === 3 ?
+                  this.zoomIconChosen :
+                  (this.previousIconFocus === 3 ?
+                    this.zoomIconNotChosen :
+                    this.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
+                this.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconHaha
+            }]
+          }}>
+            <FastImage
+              style={styles.imgIcon}
+              source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/haha.gif'}}/>
+          </Animated.View>
+        </View>
 
         {/* Icon wow */}
-        <Animated.View style={{
-          marginBottom: this.pushIconWowUp, transform: [{
-            scale: this.isDragging ?
-              (this.currentIconFocus === 4 ?
-                this.zoomIconChosen :
-                (this.previousIconFocus === 4 ?
-                  this.zoomIconNotChosen :
-                  this.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
-              this.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconWow
-          }]
-        }}>
-          <FastImage
-            style={styles.imgIcon}
-            source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/wow.gif'}}/>
-        </Animated.View>
+        <View style={styles.viewWrapIcon}>
+          {
+            this.currentIconFocus === 4 ?
+              <Animated.View style={[styles.viewWrapTextDescription, {
+                bottom: this.pushTextDescriptionUp,
+                transform: [{scale: this.zoomTextDescription}]
+              }]}>
+                <Text style={styles.textDescription}>Wow</Text>
+              </Animated.View> :
+              null
+          }
+          <Animated.View style={{
+            marginBottom: this.pushIconWowUp, transform: [{
+              scale: this.isDragging ?
+                (this.currentIconFocus === 4 ?
+                  this.zoomIconChosen :
+                  (this.previousIconFocus === 4 ?
+                    this.zoomIconNotChosen :
+                    this.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
+                this.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconWow
+            }]
+          }}>
+            <FastImage
+              style={styles.imgIcon}
+              source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/wow.gif'}}/>
+          </Animated.View>
+        </View>
 
         {/* Icon sad */}
-        <Animated.View style={{
-          marginBottom: this.pushIconSadUp, transform: [{
-            scale: this.isDragging ?
-              (this.currentIconFocus === 5 ?
-                this.zoomIconChosen :
-                (this.previousIconFocus === 5 ?
-                  this.zoomIconNotChosen :
-                  this.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
-              this.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconSad
-          }]
-        }}>
-          <FastImage
-            style={styles.imgIcon}
-            source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/sad.gif'}}/>
-        </Animated.View>
+        <View style={styles.viewWrapIcon}>
+          {
+            this.currentIconFocus === 5 ?
+              <Animated.View style={[styles.viewWrapTextDescription, {
+                bottom: this.pushTextDescriptionUp,
+                transform: [{scale: this.zoomTextDescription}]
+              }]}>
+                <Text style={styles.textDescription}>Sad</Text>
+              </Animated.View> :
+              null
+          }
+          <Animated.View style={{
+            marginBottom: this.pushIconSadUp, transform: [{
+              scale: this.isDragging ?
+                (this.currentIconFocus === 5 ?
+                  this.zoomIconChosen :
+                  (this.previousIconFocus === 5 ?
+                    this.zoomIconNotChosen :
+                    this.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
+                this.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconSad
+            }]
+          }}>
+            <FastImage
+              style={styles.imgIcon}
+              source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/sad.gif'}}/>
+          </Animated.View>
+        </View>
 
         {/* Icon angry */}
-        <Animated.View style={{
-          marginBottom: this.pushIconAngryUp, transform: [{
-            scale: this.isDragging ?
-              (this.currentIconFocus === 6 ?
-                this.zoomIconChosen :
-                (this.previousIconFocus === 6 ?
-                  this.zoomIconNotChosen :
-                  this.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
-              this.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconAngry
-          }]
-        }}>
-          <FastImage
-            style={styles.imgIcon}
-            source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/angry.gif'}}/>
-        </Animated.View>
+        <View style={styles.viewWrapIcon}>
+          {
+            this.currentIconFocus === 6 ?
+              <Animated.View style={[styles.viewWrapTextDescription, {
+                bottom: this.pushTextDescriptionUp,
+                transform: [{scale: this.zoomTextDescription}]
+              }]}>
+                <Text style={styles.textDescription}>Angry</Text>
+              </Animated.View> :
+              null
+          }
+          <Animated.View style={{
+            marginBottom: this.pushIconAngryUp, transform: [{
+              scale: this.isDragging ?
+                (this.currentIconFocus === 6 ?
+                  this.zoomIconChosen :
+                  (this.previousIconFocus === 6 ?
+                    this.zoomIconNotChosen :
+                    this.isJustDragInside ? this.zoomIconWhenDragInside : 0.8)) :
+                this.isDraggingOutside ? this.zoomIconWhenDragOutside : this.zoomIconAngry
+            }]
+          }}>
+            <FastImage
+              style={styles.imgIcon}
+              source={{uri: 'https://raw.githubusercontent.com/duytq94/facebook-reaction-animation2/master/App/Images/angry.gif'}}/>
+          </Animated.View>
+        </View>
 
       </Animated.View>
     )

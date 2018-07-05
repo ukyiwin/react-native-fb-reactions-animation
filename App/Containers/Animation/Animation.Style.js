@@ -105,6 +105,10 @@ export default StyleSheet.create({
     paddingLeft: 5,
     paddingRight: 5,
   },
+  viewWrapIcon: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   imgIcon: {
     width: 36,
     height: 36
@@ -118,7 +122,6 @@ export default StyleSheet.create({
     paddingRight: 7,
     paddingTop: 2,
     paddingBottom: 2,
-    bottom: 30,
     position: 'absolute'
   },
   textDescription: {
