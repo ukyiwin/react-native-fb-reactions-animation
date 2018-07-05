@@ -41,7 +41,7 @@ export default class AnimationScreen extends Component {
     this.durationAnimationQuickTouch = 500
     this.durationAnimationLongTouch = 150
     this.durationAnimationIconWhenDrag = 150
-    this.durationAnimationIconWhenRelease = 1500
+    this.durationAnimationIconWhenRelease = 1000
 
     // ------------------------------------------------------------------------------
     // Animation button when quick touch button
@@ -725,7 +725,8 @@ export default class AnimationScreen extends Component {
     })
 
     return (
-      <View style={styles.viewBtn} onTouchStart={this.onTouchStart} onTouchEnd={this.onTouchEnd}>
+      <View style={[styles.viewBtn, {borderColor: this.getBorderColorBtn(),}]} onTouchStart={this.onTouchStart}
+            onTouchEnd={this.onTouchEnd}>
         <Animated.Image source={this.getIconBtn()}
                         style={[styles.imgLikeInBtn,
                           {
@@ -734,12 +735,58 @@ export default class AnimationScreen extends Component {
                               {scale: this.isLongTouch ? this.zoomIconAnim2 : zoomBounceIconAnim}]
                           }]}/>
         <Animated.Text
-          style={[styles.textBtn, {color: this.isLiked ? '#3b5998' : 'grey'},
+          style={[styles.textBtn, {color: this.getColorTextBtn()},
             {transform: [{scale: this.isLongTouch ? this.zoomTextAnim2 : zoomBounceTextAnim}]}]}>
           {this.getTextBtn()}
         </Animated.Text>
       </View>
     )
+  }
+
+  getBorderColorBtn () {
+    if ((!this.isLongTouch && this.isLiked)) {
+      return '#3b5998'
+    } else if (!this.isDragging) {
+      switch (this.whichIconUserChoose) {
+        case 1:
+          return '#3b5998'
+        case 2:
+          return '#ED5167'
+        case 3:
+        case 4:
+        case 5:
+          return '#FFD96A'
+        case 6:
+          return '#F6876B'
+        default:
+          return 'grey'
+      }
+    } else {
+      return 'grey'
+    }
+  }
+
+  getColorTextBtn () {
+    if ((!this.isLongTouch && this.isLiked)) {
+      return '#3b5998'
+    } else if (!this.isDragging) {
+      switch (this.whichIconUserChoose) {
+        case 1:
+          return '#3b5998'
+        case 2:
+          return '#ED5167'
+        case 3:
+        case 4:
+        case 5:
+          return '#FFD96A'
+        case 6:
+          return '#F6876B'
+        default:
+          return 'grey'
+      }
+    } else {
+      return 'grey'
+    }
   }
 
   getIconBtn () {
