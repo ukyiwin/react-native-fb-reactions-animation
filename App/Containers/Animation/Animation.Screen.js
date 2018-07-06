@@ -123,7 +123,8 @@ export default class AnimationScreen extends Component {
   // Handle the drag gesture
   setupPanResponder () {
     this.rootPanResponder = PanResponder.create({
-      onMoveShouldSetPanResponder: (evt, gestureState) => !this.isTouchBtn,
+      // prevent if user's dragging without long touch the button
+      onMoveShouldSetPanResponder: (evt, gestureState) => !this.isTouchBtn && this.isLongTouch,
 
       onPanResponderGrant: (evt, gestureState) => {
         this.handleEmoticonWhenDragging(evt, gestureState)
@@ -147,9 +148,6 @@ export default class AnimationScreen extends Component {
   }
 
   handleEmoticonWhenDragging = (evt, gestureState) => {
-    // return if the user's dragging is drag without touch the button
-    if (!this.isLongTouch) return
-
     // the margin top the box is 100
     // and plus the height of toolbar and the status bar
     // so the range we check is about 150 -> 450
