@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 
 export default StyleSheet.create({
   viewContainer: {
@@ -6,7 +6,7 @@ export default StyleSheet.create({
   },
   toolbar: {
     width: '100%',
-    height: 48,
+    height: Platform.OS === 'android' ? 48 : 68,
     justifyContent: 'center',
     backgroundColor: '#3b5998'
   },
@@ -14,7 +14,8 @@ export default StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginTop: Platform.OS === 'android' ? 0 : 20
   },
 
   // Button

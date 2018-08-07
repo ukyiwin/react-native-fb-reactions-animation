@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 
 export default StyleSheet.create({
   // Container
@@ -10,7 +10,7 @@ export default StyleSheet.create({
   // Toolbar
   toolbar: {
     width: '100%',
-    height: 48,
+    height: Platform.OS === 'android' ? 48 : 68,
     alignItems: 'center',
     backgroundColor: '#3b5998',
     flexDirection: 'row'
@@ -19,31 +19,34 @@ export default StyleSheet.create({
     width: 23,
     height: 23,
     marginLeft: 26,
-    tintColor: 'white'
+    tintColor: 'white',
+    marginTop: Platform.OS === 'android' ? 0 : 20
   },
   icTrail: {
     width: 23,
     height: 23,
     marginLeft: 26,
+    marginTop: Platform.OS === 'android' ? 0 : 20
   },
   titleToolbar: {
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
     textAlign: 'center',
-    flex: 1
+    flex: 1,
+    marginTop: Platform.OS === 'android' ? 0 : 20
   },
 
   // Body
   viewBody: {
     flex: 1,
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
 
   // Top blank space
   viewTopSpace: {
     width: '100%',
-    height: 100,
+    height: 100
   },
 
   // Main content
@@ -53,7 +56,7 @@ export default StyleSheet.create({
     flexDirection: 'column',
     height: 320,
     marginLeft: 10,
-    marginRight: 10,
+    marginRight: 10
   },
 
   // Box
@@ -65,7 +68,7 @@ export default StyleSheet.create({
     marginLeft: 20,
     position: 'absolute',
     // Has to set color for elevation
-    backgroundColor: 'white',
+    backgroundColor: 'white'
     // elevation: 6,
   },
 
@@ -79,16 +82,16 @@ export default StyleSheet.create({
     padding: 10,
     borderRadius: 3,
     marginTop: 170,
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   textBtn: {
     color: 'grey',
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   imgLikeInBtn: {
     width: 25,
-    height: 25,
+    height: 25
   },
 
   // Group icon
@@ -103,7 +106,7 @@ export default StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'space-around',
     paddingLeft: 5,
-    paddingRight: 5,
+    paddingRight: 5
   },
   viewWrapIcon: {
     justifyContent: 'center',
@@ -126,7 +129,7 @@ export default StyleSheet.create({
   },
   textDescription: {
     color: 'white',
-    fontSize: 8,
+    fontSize: 8
   },
 
   // Group jump icon
@@ -140,5 +143,5 @@ export default StyleSheet.create({
     marginLeft: 10,
     position: 'absolute',
     alignItems: 'flex-end'
-  },
+  }
 })
