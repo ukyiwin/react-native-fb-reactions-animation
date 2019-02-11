@@ -84,7 +84,7 @@
     "jest": "22.0.3",
     "mockery": "^2.1.0",
     "open": "0.0.5",
-    "react-dom": "16.0.0",
+    "react-dom": "^16.8.1",
     "react-native-debugger-open": "^0.3.17",
     "react-test-renderer": "16.0.0",
     "reactotron-react-native": "^1.13.2",

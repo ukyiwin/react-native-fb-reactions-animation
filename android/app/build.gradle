@@ -162,20 +162,17 @@ android {
     }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
-        variant.outputs.each { output ->
+        variant.outputs.all { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
             def versionCodes = ["armeabi-v7a":1, "x86":2]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
-                        versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
+                    versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
             }
 
-            def APK_NAME = variant.name.capitalize() + ".apk"
-            output.outputFile = new File(
-                output.outputFile.parent,
-                output.outputFile.name.replace(output.outputFile.name, APK_NAME))
+            outputFileName = variant.name.capitalize() + ".apk"
 
         }
     }
