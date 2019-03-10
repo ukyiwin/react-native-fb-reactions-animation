@@ -1,6 +1,5 @@
 // leave off @2x/@3x
 const images = {
-  launch: require('../Images/launch-icon.png'),
   ready: require('../Images/your-app.png'),
   api: require('../Images/Icons/icon-api-testing.png'),
   components: require('../Images/Icons/icon-components.png'),
